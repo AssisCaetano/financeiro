@@ -22,13 +22,12 @@ public class ContasAPagar {
     
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID idCntas;
+    private UUID idConta;
     private Double capitalInicial;
     private Double juros;
     private Double valorDoJuros;
     private Double valorDoJurosPago;
     private Double adiantamentoDeCapital;
-    private Double novoEmprestimo;
-    private Double novoSaldo;
+    private Double SaldoDevedor;
    
 }
