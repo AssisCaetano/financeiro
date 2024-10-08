@@ -1,23 +1,26 @@
 package com.controle.financeiro.domain.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.controle.financeiro.domain.model.ContasAPagar;
 import com.controle.financeiro.domain.repositore.ContasAPagarRepository;
 
+@Service
 public class ContasAPagarService {
     
     @Autowired
-    private ContasAPagarRepository contasAPagarRe;
+    private ContasAPagarRepository contasAPagarRepository;
 
-    public ContasAPagar saveConta(){
-        ContasAPagar contasAPagar = new ContasAPagar();
-        double jurosEmCimaDoCapitalInicial = contasAPagar.getCapitalInicial() * contasAPagar.getJuros();
-        contasAPagar.setValorDoJuros(jurosEmCimaDoCapitalInicial);
-        double total = jurosEmCimaDoCapitalInicial + contasAPagar.getCapitalInicial();
-        contasAPagar.setSaldoDevedor(total);
+    public ContasAPagar saveConta(ContasAPagar contasAPagar){
+        
+        double juroEmcimaDoCapitalInicial = contasAPagar.getCapitalInicial() * contasAPagar.getJuros();
+        contasAPagar.setValorDoJuros(juroEmcimaDoCapitalInicial);
 
-        contasAPagarRe.save(saveConta());
-        return saveConta();
+        double saldoAtualizado = contasAPagar.getCapitalInicial() + contasAPagar.getValorDoJuros();
+        contasAPagar.setSaldoDevedor(saldoAtualizado);
+        
+        return contasAPagarRepository.save(contasAPagar);
+      
     }
 }
