@@ -20,6 +20,6 @@ public class ContasAPagarController {
 
     @PostMapping("/cadastro")
     public ResponseEntity<ContasAPagar> saveConta(@RequestBody ContasAPagar contasAPagar){
-        return ResponseEntity.status(HttpStatus.CREATED).body(contasAPagarService.saveConta());
+        return ResponseEntity.status(HttpStatus.CREATED).body(contasAPagarService.saveConta(contasAPagar));
     }
 }
