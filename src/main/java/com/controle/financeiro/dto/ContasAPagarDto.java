@@ -1,5 +1,5 @@
 package com.controle.financeiro.dto;
 
-public record ContasAPagarDto(double capitalInicial, double juros, double valorDoJuros, double valorDoJurosPago, double adiantamentoDeCapital, double saldoDevedor) {
+public record ContasAPagarDto(String dataDoEmprestimo, String dataDeVencimento, double capitalInicial, double juros, double valorDoJuros, double saldoDevedor) {
     
 }
