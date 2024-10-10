@@ -26,7 +26,7 @@ public class ContasAPagar {
     private String dataDoEmprestimo;
     private String dataDeVencimento;
     private double capitalInicial;
-    private double juros;
+    private double taxaDeJuros;
     private double valorDoJuros;
     private double SaldoDevedor;
     
