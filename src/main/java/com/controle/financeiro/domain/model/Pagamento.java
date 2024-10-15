@@ -7,7 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -15,28 +14,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@Entity
-@Table(name = "caderneta")
-public class ContasAPagar {
+@Table(name = "pagamento")
+public class Pagamento{
     
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID idConta;
-    private String dataDoEmprestimo;
-    private String dataDeVencimento;
-    private double capitalInicial;
-    private double taxaDeJuros;
-    private double valorDoJuros;
-    private double SaldoDevedor;
-    
-    @ManyToOne
-    @JoinColumn(name = "id_solicitante")
-    private Solicitante solicitante;
+    private UUID idPagamento;
+    private String dataDePagamento;
+    private double valorPago;
 
-    @OneToOne(mappedBy = "contasAPagar")
-    private Pagamento pagamento;
+    @OneToOne
+    @JoinColumn(name = "id_contasapagar")
+    private ContasAPagar contasAPagar;
 }
