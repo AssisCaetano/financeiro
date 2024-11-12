@@ -8,7 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+// import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,15 +28,19 @@ public class ContasAPagar {
     private UUID idConta;
     private String dataDoEmprestimo;
     private String dataDeVencimento;
+    private String status;
     private double capitalInicial;
     private double taxaDeJuros;
     private double valorDoJuros;
     private double SaldoDevedor;
+    private double valorPago;
+    private String dataDePagamento;
     
     @ManyToOne
     @JoinColumn(name = "id_solicitante")
     private Solicitante solicitante;
 
-    @OneToOne(mappedBy = "contasAPagar")
-    private Pagamento pagamento;
+    // @OneToOne(mappedBy = "contasAPagar")
+    // private Pagamento pagamento;
+
 }

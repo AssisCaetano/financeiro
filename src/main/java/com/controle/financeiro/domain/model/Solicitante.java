@@ -34,5 +34,5 @@ public class Solicitante {
 
     // @OneToMany(mappedBy = "solicitante")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true  )
-    private List<ContasAPagar> contasAPagar= new ArrayList<>();
+    private List<ContasAPagar> contasAPagar = new ArrayList<>();
 }

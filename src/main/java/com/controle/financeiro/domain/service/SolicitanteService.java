@@ -59,6 +59,7 @@ public class SolicitanteService {
         return deletarSolicante;
     }
 
+    // Adiciona uma conta ao usuário
     public Solicitante adicionaConta(UUID id, ContasAPagar contasAPagar){
         Optional<Solicitante> conta = solicitanteRepository.findById(id);
         if(conta.isPresent()){
