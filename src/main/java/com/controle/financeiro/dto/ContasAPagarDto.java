@@ -1,5 +1,7 @@
 package com.controle.financeiro.dto;
 
-public record ContasAPagarDto(String dataDoEmprestimo, String dataDeVencimento, double capitalInicial, double taxaDeJuros, double valorDoJuros, double saldoDevedor) {
+import java.time.LocalDate;
+
+public record ContasAPagarDto(LocalDate dataDoEmprestimo, LocalDate dataDeVencimento, double capitalInicial, double taxaDeJuros, double valorDoJuros, double saldoDevedor) {
     
 }

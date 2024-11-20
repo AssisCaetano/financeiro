@@ -70,4 +70,6 @@ public class SolicitanteService {
             throw new RuntimeException("Não adicionado");
         }   
     }
+
+    
 }
