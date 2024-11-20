@@ -1,5 +1,6 @@
 package com.controle.financeiro.domain.model;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
@@ -25,8 +26,10 @@ public class Pagamento{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID idPagamento;
+    private LocalDate dataDeVencimento;
+    private double valorDivida;
     private double valorDoPagamento;
-    private String dataPagamento;
+    private LocalDate dataPagamento;
 
     @ManyToOne
     @JoinColumn(name = "idContas", nullable = true)

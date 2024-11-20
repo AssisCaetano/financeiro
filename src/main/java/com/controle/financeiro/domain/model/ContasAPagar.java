@@ -1,5 +1,6 @@
 package com.controle.financeiro.domain.model;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
@@ -8,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-// import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,21 +26,18 @@ public class ContasAPagar {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID idConta;
-    private String dataDoEmprestimo;
-    private String dataDeVencimento;
-    private String status;
+    private LocalDate dataDoEmprestimo;
+    private LocalDate dataDeVencimento;
+    private String status = "Pendente";
     private double capitalInicial;
     private double taxaDeJuros;
     private double valorDoJuros;
     private double SaldoDevedor;
     private double valorPago;
-    private String dataDePagamento;
+    private LocalDate dataDePagamento;
     
     @ManyToOne
     @JoinColumn(name = "id_solicitante")
     private Solicitante solicitante;
-
-    // @OneToOne(mappedBy = "contasAPagar")
-    // private Pagamento pagamento;
 
 }

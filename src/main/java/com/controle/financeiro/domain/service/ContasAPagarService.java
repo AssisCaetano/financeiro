@@ -28,6 +28,7 @@ public class ContasAPagarService {
         ContasAPagar contas = new ContasAPagar();
         BeanUtils.copyProperties(contasAPagarDto, contas);
 
+        contas.setDataDoEmprestimo(contas.getDataDoEmprestimo().now());
         contas.setValorDoJuros(juroEmcimaDoCapitalInicial);
         contas.setSaldoDevedor(saldoAtualizado);
 

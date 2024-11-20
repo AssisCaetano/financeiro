@@ -37,6 +37,11 @@ public class ContasAPagarController {
         return ResponseEntity.status(HttpStatus.OK).body(contasAPagarService.getContasAPagarAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<ContasAPagar>> getContasAPagarAll(@PathVariable(value = "id")UUID id){
+        return ResponseEntity.status(HttpStatus.OK).body(contasAPagarService.getContasAPagarById(id));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity <Optional<ContasAPagar>> atualizarContasAPagar(@PathVariable(value = "id")UUID id, @RequestBody ContasAPagarDto contasAPagar){
         return ResponseEntity.status(HttpStatus.CREATED).body(contasAPagarService.atualizarContasAPagar(id, contasAPagar));
