@@ -28,7 +28,8 @@ public class ContasAPagar {
     private UUID idConta;
     private LocalDate dataDoEmprestimo;
     private LocalDate dataDeVencimento;
-    private String status = "Pendente";
+    private String status = "ADIPLENTE";
+    private double reajuste;
     private double capitalInicial;
     private double taxaDeJuros;
     private double valorDoJuros;

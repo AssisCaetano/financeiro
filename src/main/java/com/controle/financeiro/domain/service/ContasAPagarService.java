@@ -1,6 +1,7 @@
 package com.controle.financeiro.domain.service;
 
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import java.util.Optional;
@@ -54,16 +55,23 @@ public class ContasAPagarService {
         return contasAPagarRepository.findById(id);
     }
 
-    //retorna uma de lista de contas
+    //retorna uma lista de contas
     public List<ContasAPagar> getContasAPagarAll(){
         List<ContasAPagar> listaAPagar = contasAPagarRepository.findAll();
+        
         return listaAPagar;
     }
 
     //retorna uma unica conta
     public Optional<ContasAPagar> getContasAPagarById(UUID id){
-            Optional<ContasAPagar> contaById = contasAPagarRepository.findById(id);
-            return contaById;
+        Optional<ContasAPagar> contaById = contasAPagarRepository.findById(id);
+        double saldoReajustado;
+        if(contaById.get().getDataDeVencimento().isBefore(LocalDate.now())){
+            contaById.get().setStatus("INADIMPLENTE");
+            saldoReajustado = contaById.get().getSaldoDevedor()+contaById.get().getValorDoJuros();
+            contaById.get().setReajuste(saldoReajustado);
+        }
+        return contaById;
     }
     //deletando conta
     public Optional<ContasAPagar> deletarConta(UUID id){

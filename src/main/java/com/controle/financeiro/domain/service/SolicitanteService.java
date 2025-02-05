@@ -71,5 +71,12 @@ public class SolicitanteService {
         }   
     }
 
-    
+    public Solicitante removerConta(UUID id, ContasAPagar contasAPagar){
+        Optional<Solicitante> conta = solicitanteRepository.findById(id);
+
+        Solicitante solicitante = conta.get();
+        solicitante.getContasAPagar().remove(contasAPagar);
+        solicitante.setContasAPagar(null);
+        return solicitanteRepository.save(solicitante);
+    }
 }
