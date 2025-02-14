@@ -1,6 +1,7 @@
 package com.controle.financeiro.domain.service;
 
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -23,32 +24,30 @@ public class ContasAPagarService {
     //cadastrar conta
     public ContasAPagar saveConta(ContasAPagarDto contasAPagarDto){
 
-        double juroEmcimaDoCapitalInicial = contasAPagarDto.capitalInicial() * contasAPagarDto.taxaDeJuros();
-        double saldoAtualizado = contasAPagarDto.capitalInicial() + juroEmcimaDoCapitalInicial;
+        BigDecimal juroEmCimaDoCapitalInicial = contasAPagarDto.capitalInicial().multiply(contasAPagarDto.taxaDeJuros());
+        BigDecimal saldoAtualizado = contasAPagarDto.capitalInicial().add(juroEmCimaDoCapitalInicial);
 
         ContasAPagar contas = new ContasAPagar();
         BeanUtils.copyProperties(contasAPagarDto, contas);
 
-        contas.setDataDoEmprestimo(contas.getDataDoEmprestimo().now());
-        contas.setValorDoJuros(juroEmcimaDoCapitalInicial);
+        contas.setDataDoEmprestimo(LocalDate.now());
+        contas.setValorDoJuros(juroEmCimaDoCapitalInicial);
         contas.setSaldoDevedor(saldoAtualizado);
 
-        return contasAPagarRepository.save(contas);
-      
+        return contasAPagarRepository.save(contas);    
     }
-
       //atualiza uma conta
-      public Optional<ContasAPagar> atualizarContasAPagar(UUID id, ContasAPagarDto contasAPagarDto){
+    public Optional<ContasAPagar> atualizarContasAPagar(UUID id, ContasAPagarDto contasAPagarDto){
 
         Optional<ContasAPagar> contaByID = contasAPagarRepository.findById(id);
 
-        double juroEmcimaDoCapitalInicial = contasAPagarDto.capitalInicial() * contasAPagarDto.taxaDeJuros();
-        double saldoAtualizado = contasAPagarDto.capitalInicial() + juroEmcimaDoCapitalInicial;
+        BigDecimal juroEmCimaDoCapitalInicial = contasAPagarDto.capitalInicial().multiply(contasAPagarDto.taxaDeJuros());
+        BigDecimal saldoAtualizado = contasAPagarDto.capitalInicial().add(juroEmCimaDoCapitalInicial);
 
         ContasAPagar contas = contaByID.get();
         BeanUtils.copyProperties(contasAPagarDto, contas);
 
-        contas.setValorDoJuros(juroEmcimaDoCapitalInicial);
+        contas.setValorDoJuros(juroEmCimaDoCapitalInicial);
         contas.setSaldoDevedor(saldoAtualizado);
         contasAPagarRepository.save(contas);
 
@@ -65,10 +64,10 @@ public class ContasAPagarService {
     //retorna uma unica conta
     public Optional<ContasAPagar> getContasAPagarById(UUID id){
         Optional<ContasAPagar> contaById = contasAPagarRepository.findById(id);
-        double saldoReajustado;
+        BigDecimal saldoReajustado;
         if(contaById.get().getDataDeVencimento().isBefore(LocalDate.now())){
             contaById.get().setStatus("INADIMPLENTE");
-            saldoReajustado = contaById.get().getSaldoDevedor()+contaById.get().getValorDoJuros();
+            saldoReajustado  = contaById.get().getSaldoDevedor().add(contaById.get().getValorDoJuros());
             contaById.get().setReajuste(saldoReajustado);
         }
         return contaById;
@@ -77,8 +76,7 @@ public class ContasAPagarService {
     public Optional<ContasAPagar> deletarConta(UUID id){
         Optional<ContasAPagar> byId = contasAPagarRepository.findById(id);
         contasAPagarRepository.deleteById(id);
-        return byId;
-       
+        return byId;       
     }
 
 }

@@ -21,18 +21,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "solicitante")
+@Table(name = "Usuario")
 public class Solicitante {
     
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID idSolicitante;
     private String nome;
-    private String sobreNome;
+    private String sobrenome;
     private String endereco;
     private String telefone;
 
-    // @OneToMany(mappedBy = "solicitante")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true  )
     private List<ContasAPagar> contasAPagar = new ArrayList<>();
 }

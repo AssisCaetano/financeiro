@@ -22,33 +22,33 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
-@RequestMapping("/pagamento")
+@RequestMapping("/cadastrar_pagamento/")
 public class PagamentoController {
 
     @Autowired
     private PagamentoService pagamentoService;
 
-    @PostMapping("/lancar/{id}")
+    @PostMapping("pagamento/{id}")
     public ResponseEntity<Pagamento> lancarPagamento(@PathVariable(value = "id")UUID id, @RequestBody PagamentoDto pagamentoDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(pagamentoService.lancarPagamento(id, pagamentoDto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("pagamento/{id}")
     public ResponseEntity <Optional<Pagamento>> atualizaPagamento(@PathVariable(value = "id")UUID id, @RequestBody PagamentoDto pagamento){
         return ResponseEntity.status(HttpStatus.CREATED).body(pagamentoService.atualizaPagamento(id, pagamento));
     }
 
-    @GetMapping("/pagamentos")
+    @GetMapping("pagamentos")
     public ResponseEntity<List<Pagamento>> listaPagamentos(){
         return ResponseEntity.status(HttpStatus.OK).body(pagamentoService.listaPagamentos());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("pagamento/{id}")
     public ResponseEntity <Optional<Pagamento>> pagamentoId(@PathVariable(value = "id")UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(pagamentoService.pagamaentoId(id));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("pagamento/{id}")
     public ResponseEntity<Optional<Pagamento>> delatandoPagamento(@PathVariable(value = "id")UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(pagamentoService.deletandoPagamento(id));
     }
