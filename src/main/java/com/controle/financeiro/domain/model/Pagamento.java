@@ -1,7 +1,10 @@
 package com.controle.financeiro.domain.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,14 +29,16 @@ public class Pagamento{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID idPagamento;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate dataDeVencimento;
-    private double valorDivida;
-    private double valorDoPagamento;
+    private BigDecimal valorDivida;
+    private BigDecimal valorDoPagamento;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy" )
     private LocalDate dataPagamento;
 
     @ManyToOne
     @JoinColumn(name = "idContas", nullable = true)
     private ContasAPagar contasAPagar;
-
-   
 }

@@ -21,33 +21,33 @@ import com.controle.financeiro.domain.service.ContasAPagarService;
 import com.controle.financeiro.dto.ContasAPagarDto;
 
 @RestController
-@RequestMapping("/cadastro")
+@RequestMapping("/cadastrar_conta/")
 public class ContasAPagarController {
     
     @Autowired
     private ContasAPagarService contasAPagarService;
 
-    @PostMapping("/cadastrar")
+    @PostMapping("conta")
     public ResponseEntity<ContasAPagar> saveConta(@RequestBody ContasAPagarDto contasAPagar){
         return ResponseEntity.status(HttpStatus.CREATED).body(contasAPagarService.saveConta(contasAPagar));
     }
 
-    @GetMapping("/cadastros")
+    @GetMapping("contas")
     public ResponseEntity <List<ContasAPagar>> getContasAPagarAll(){
         return ResponseEntity.status(HttpStatus.OK).body(contasAPagarService.getContasAPagarAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("conta/{id}")
     public ResponseEntity<Optional<ContasAPagar>> getContasAPagarAll(@PathVariable(value = "id")UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(contasAPagarService.getContasAPagarById(id));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("conta/{id}")
     public ResponseEntity <Optional<ContasAPagar>> atualizarContasAPagar(@PathVariable(value = "id")UUID id, @RequestBody ContasAPagarDto contasAPagar){
         return ResponseEntity.status(HttpStatus.CREATED).body(contasAPagarService.atualizarContasAPagar(id, contasAPagar));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("conta/{id}")
     public ResponseEntity<Optional<ContasAPagar>> deletarConta(@PathVariable(value = "id")UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(contasAPagarService.deletarConta(id));
     }

@@ -1,7 +1,10 @@
 package com.controle.financeiro.domain.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,21 +23,27 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "caderneta")
+@Table(name = "conta")
 public class ContasAPagar {
     
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID idConta;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate dataDoEmprestimo;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate dataDeVencimento;
     private String status = "ADIPLENTE";
-    private double reajuste;
-    private double capitalInicial;
-    private double taxaDeJuros;
-    private double valorDoJuros;
-    private double SaldoDevedor;
-    private double valorPago;
+    private BigDecimal reajuste;
+    private BigDecimal capitalInicial;
+    private BigDecimal taxaDeJuros;
+    private BigDecimal valorDoJuros;
+    private BigDecimal SaldoDevedor;
+    private BigDecimal valorPago;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate dataDePagamento;
     
     @ManyToOne

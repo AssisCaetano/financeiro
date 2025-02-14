@@ -24,33 +24,33 @@ import com.controle.financeiro.dto.SolicitanteDto;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping
+@RequestMapping("/cadastrar_usuario/")
 public class SolicitanteController {
 
     @Autowired
     private SolicitanteService solicitarService;
     
-    @PostMapping("/cadastrar_usuario")
+    @PostMapping("usuario")
     public ResponseEntity<Solicitante> salvarUsuario(@RequestBody SolicitanteDto solicitanteDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(solicitarService.salvarUsuario(solicitanteDto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("usuario/{id}")
     public ResponseEntity <Optional<Solicitante>> atualizaSolicitante(@PathVariable(value = "id")UUID id, @RequestBody SolicitanteDto solicitante){
         return ResponseEntity.status(HttpStatus.CREATED).body(solicitarService.atualizaSolicitante(id, solicitante));
     }
 
-    @GetMapping("/usuarios")
+    @GetMapping("usuarios")
     public ResponseEntity<List<Solicitante>> listaSolicitante(){
         return ResponseEntity.status(HttpStatus.OK).body(solicitarService.listarSolicitante());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("usuario/{id}")
     public ResponseEntity<Optional<Solicitante>> buscaSolicitante(@PathVariable (value = "id")UUID id, SolicitanteDto solicitanteDto){
         return ResponseEntity.status(HttpStatus.OK).body(solicitarService.buscaSolicitante(id, solicitanteDto));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("usuario/{id}")
     public ResponseEntity<Optional<Solicitante>> deletaSolicitante(@PathVariable(value = "id")UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(solicitarService.deletaSolicitante(id));
     }
@@ -63,7 +63,6 @@ public class SolicitanteController {
 
     @PutMapping("/remover/{id}")
     public ResponseEntity<Solicitante> removerConta(@PathVariable(value = "id")UUID id, ContasAPagar contasAPagar){
-       
         return ResponseEntity.status(HttpStatus.OK).body(solicitarService.removerConta(id, contasAPagar));
     }
 }
