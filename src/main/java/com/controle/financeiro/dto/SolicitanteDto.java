@@ -1,5 +1,5 @@
 package com.controle.financeiro.dto;
 
-public record SolicitanteDto(String nome, String sobreNome, String endereco, String telefone) {
+public record SolicitanteDto(String nome, String sobrenome, String endereco, String telefone) {
     
 }
