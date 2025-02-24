@@ -22,6 +22,8 @@ import com.controle.financeiro.domain.model.Solicitante;
 import com.controle.financeiro.domain.service.SolicitanteService;
 import com.controle.financeiro.dto.SolicitanteDto;
 
+import jakarta.validation.Valid;
+
 @RestController
 @CrossOrigin("http://127.0.0.1:5500/")
 @RequestMapping("/cadastrar_usuario/")
@@ -31,8 +33,8 @@ public class SolicitanteController {
     private SolicitanteService solicitarService;
     
     @PostMapping("usuario")
-    public ResponseEntity<Solicitante> salvarUsuario(@RequestBody SolicitanteDto solicitanteDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(solicitarService.salvarUsuario(solicitanteDto));
+    public ResponseEntity<Solicitante> salvarUsuario(@Valid @RequestBody SolicitanteDto solicitante){
+        return ResponseEntity.status(HttpStatus.CREATED).body(solicitarService.salvarUsuario(solicitante));
     }
 
     @PutMapping("usuario/{id}")

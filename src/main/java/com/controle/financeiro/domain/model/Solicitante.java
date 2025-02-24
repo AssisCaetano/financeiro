@@ -11,15 +11,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+import lombok.Data;
+@Data
 @Entity
 @Table(name = "Usuario")
 public class Solicitante {
@@ -31,6 +24,7 @@ public class Solicitante {
     private String sobrenome;
     private String endereco;
     private String telefone;
+    private String cpf;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true  )
     private List<ContasAPagar> contasAPagar = new ArrayList<>();

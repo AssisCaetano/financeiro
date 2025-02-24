@@ -12,21 +12,22 @@ import com.controle.financeiro.domain.model.ContasAPagar;
 import com.controle.financeiro.domain.model.Solicitante;
 import com.controle.financeiro.domain.repositore.SolicitanteRepository;
 import com.controle.financeiro.dto.SolicitanteDto;
+import com.controle.financeiro.exceptions.NotFoundException;
 
 @Service
 public class SolicitanteService {
 
     @Autowired
     private SolicitanteRepository solicitanteRepository;
-    // Criação de usuário
-    public Solicitante salvarUsuario(SolicitanteDto solicitanteDto){
 
+    public Solicitante salvarUsuario(SolicitanteDto solicitanteDto){
         Solicitante solicitante = new Solicitante();
         BeanUtils.copyProperties(solicitanteDto, solicitante);
-
-        Solicitante salvarUsuario = solicitanteRepository.save(solicitante);
-
-        return salvarUsuario;
+        Optional<Solicitante> usuario = solicitanteRepository.findByCpf(solicitante.getCpf());
+        if(usuario.isPresent()){
+            throw new NotFoundException();
+        }
+        return solicitanteRepository.save(solicitante);
     }
 
     // Atualização de usuário
@@ -35,6 +36,7 @@ public class SolicitanteService {
         Optional<Solicitante> atualizar = solicitanteRepository.findById(id);
         Solicitante solicitante = atualizar.get();
         BeanUtils.copyProperties(solicitanteDto, solicitante);
+
 
         solicitanteRepository.save(solicitante);
 
