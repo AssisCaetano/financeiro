@@ -7,12 +7,14 @@ import java.util.UUID;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.controle.financeiro.domain.model.ContasAPagar;
 import com.controle.financeiro.domain.model.Solicitante;
 import com.controle.financeiro.domain.repositore.SolicitanteRepository;
 import com.controle.financeiro.dto.SolicitanteDto;
+import com.controle.financeiro.exceptions.BadRequestException;
+import com.controle.financeiro.exceptions.DataNotFound;
 import com.controle.financeiro.exceptions.NotFoundException;
+
 
 @Service
 public class SolicitanteService {
@@ -25,60 +27,53 @@ public class SolicitanteService {
         BeanUtils.copyProperties(solicitanteDto, solicitante);
         Optional<Solicitante> usuario = solicitanteRepository.findByCpf(solicitante.getCpf());
         if(usuario.isPresent()){
-            throw new NotFoundException();
+            throw new BadRequestException();
         }
-        return solicitanteRepository.save(solicitante);
+            return solicitanteRepository.save(solicitante);
     }
-
-    // Atualização de usuário
     public Optional<Solicitante> atualizaSolicitante(UUID id, SolicitanteDto solicitanteDto){
-
         Optional<Solicitante> atualizar = solicitanteRepository.findById(id);
-        Solicitante solicitante = atualizar.get();
-        BeanUtils.copyProperties(solicitanteDto, solicitante);
-
-
-        solicitanteRepository.save(solicitante);
-
+        if(atualizar.isEmpty()){
+            throw new NotFoundException();
+        }else{
+            Solicitante solicitante = atualizar.get();
+            BeanUtils.copyProperties(solicitanteDto, solicitante);
+            solicitanteRepository.save(solicitante);
+        }
         return solicitanteRepository.findById(id);
     }
-
-    // Retornando uma lista de Solicitante
     public List<Solicitante> listarSolicitante(){
-        return solicitanteRepository.findAll();
+        List<Solicitante> users = solicitanteRepository.findAll();
+        if(users.isEmpty()){
+            throw new RuntimeException("Nenhuma informação encontrada!");
+        }else{
+            return solicitanteRepository.findAll();
+        }
     }
-
-    // Buscando usuário pelo Id
     public Optional<Solicitante> buscaSolicitante(UUID id, SolicitanteDto solicitanteDto){
         Optional<Solicitante> localizar = solicitanteRepository.findById(id);
-        return localizar;
+        if(localizar.isPresent()){
+            return localizar;
+        }
+        throw new NotFoundException();
     }
-
-    // Deletando um solicitante
     public Optional<Solicitante> deletaSolicitante(UUID id){
         Optional<Solicitante> deletarSolicante = solicitanteRepository.findById(id);
-        solicitanteRepository.deleteById(id);
-        return deletarSolicante;
+        if(deletarSolicante.isPresent()){
+            solicitanteRepository.deleteById(id);
+            return deletarSolicante;
+        }else{
+            throw new DataNotFound();
+        }
     }
-
-    // Adiciona uma conta ao usuário
     public Solicitante adicionaConta(UUID id, ContasAPagar contasAPagar){
-        Optional<Solicitante> conta = solicitanteRepository.findById(id);
-        if(conta.isPresent()){
-            Solicitante solicitante = conta.get();
+        Optional<Solicitante> usr = solicitanteRepository.findById(id);
+        if(usr.isPresent()){
+            Solicitante solicitante = usr.get();
             solicitante.getContasAPagar().add(contasAPagar);
             return solicitanteRepository.save(solicitante);
         }else{
-            throw new RuntimeException("Não adicionado");
-        }   
-    }
-
-    public Solicitante removerConta(UUID id, ContasAPagar contasAPagar){
-        Optional<Solicitante> conta = solicitanteRepository.findById(id);
-
-        Solicitante solicitante = conta.get();
-        solicitante.getContasAPagar().remove(contasAPagar);
-        solicitante.setContasAPagar(null);
-        return solicitanteRepository.save(solicitante);
+            throw new RuntimeException("Conta não adicionada");
+        }
     }
 }

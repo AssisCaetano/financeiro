@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.controle.financeiro.exceptions.BadRequestException;
+import com.controle.financeiro.exceptions.DataNotFound;
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler{
@@ -20,8 +21,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler{
     }
 
     @ExceptionHandler(BadRequestException.class)
-    private  ResponseEntity<RestErrorMessage> BadRequestHandler(BadRequestException exception){
-        RestErrorMessage campoVazio = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(campoVazio);
+    private ResponseEntity<RestErrorMessage> BadRequestHandler(BadRequestException exception){
+        RestErrorMessage dadoDuplicado = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(dadoDuplicado);
+    }
+
+    @ExceptionHandler(DataNotFound.class)
+    private ResponseEntity<RestErrorMessage> DataNotFoundHandler(DataNotFound exception){
+        RestErrorMessage dadosNaoEncontrado = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(dadosNaoEncontrado);
     }
 }

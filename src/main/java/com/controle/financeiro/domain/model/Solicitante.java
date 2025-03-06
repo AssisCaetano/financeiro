@@ -11,12 +11,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
-@Data
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "Usuario")
 public class Solicitante {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID idSolicitante;
@@ -26,6 +32,6 @@ public class Solicitante {
     private String telefone;
     private String cpf;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true  )
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ContasAPagar> contasAPagar = new ArrayList<>();
 }
