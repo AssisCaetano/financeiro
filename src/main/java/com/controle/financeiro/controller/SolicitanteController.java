@@ -59,12 +59,6 @@ public class SolicitanteController {
 
     @PostMapping("/conta/{id}")
     public ResponseEntity<Solicitante> adicionaConta(@PathVariable(value = "id")UUID id, @RequestBody ContasAPagar contasAPagar){
-        // Solicitante adConta = solicitarService.adicionaConta(id, contasAPagar);
         return ResponseEntity.status(HttpStatus.OK).body(solicitarService.adicionaConta(id, contasAPagar));
-    }
-
-    @PutMapping("/remover/{id}")
-    public ResponseEntity<Solicitante> removerConta(@PathVariable(value = "id")UUID id, ContasAPagar contasAPagar){
-        return ResponseEntity.status(HttpStatus.OK).body(solicitarService.removerConta(id, contasAPagar));
     }
 }

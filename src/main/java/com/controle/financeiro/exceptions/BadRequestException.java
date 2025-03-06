@@ -3,7 +3,7 @@ package com.controle.financeiro.exceptions;
 public class BadRequestException extends RuntimeException{
     
     public BadRequestException(){
-        super("O campo não pode está vazio! ");
+        super("Os campos preenchido já existem! ");
     }
     public BadRequestException(String message){
         super(message);
