@@ -9,14 +9,15 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Answers.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -39,6 +40,19 @@ public class SolicitanteServiceTest {
     
         @BeforeEach
         void setUp(){
+            // Solicitante solicitante = new Solicitante();
+            // solicitante.setIdSolicitante(UUID.randomUUID());
+            // solicitante.setNome("Mathia");
+            // solicitante.setSobrenome("Souza");
+            // solicitante.setEndereco("Av.Contorno Leste");
+            // solicitante.setTelefone("(85)98844-2356");
+            // solicitante.setCpf("003.849.946-04");
+            // SolicitanteDto solicitanteDto = new SolicitanteDto("Mathia", "Souza", "Av.Contorno Leste", "(85)98844-2356", "003.849.946-04");
+            // solicitanteDto.nome();
+            // lenient().when(solicitanteRepository.findByCpf(solicitante.getCpf())).thenReturn(Optional.of(solicitante));
+            // lenient().when(solicitanteRepository.findById(solicitante.getIdSolicitante())).thenReturn(Optional.of(solicitante));
+            // lenient().when(solicitanteRepository.findAll()).thenReturn(Collections.singletonList(solicitante));
+
             MockitoAnnotations.openMocks(this);
         }
     
@@ -50,12 +64,17 @@ public class SolicitanteServiceTest {
             void shouldCreateAUserWithSuccess(){
                 //Arrange
                 var solicitante = new Solicitante();
+        
                 doReturn(solicitante).when(solicitanteRepository).save(any(Solicitante.class));
-                var solicitanteDto = new SolicitanteDto("nome",  "sobrenome","endereco", "telefone", "cpf");
+                var solicitanteDto = new SolicitanteDto("nome",  "sobrenome","endereco", "telefone", "007389740209694");
+                solicitante.setCpf("007389740209694");
                 var user = solicitanteService.salvarUsuario(solicitanteDto);
                 //Assert
                 assertNotNull(user);
                 assertEquals(solicitante, user);
+
+                verify(solicitanteRepository).findByCpf(solicitante.getCpf());
+                verifyNoMoreInteractions(solicitanteRepository);
             }
             @Test
             @DisplayName("verificandoSeOUsuaroExiste")

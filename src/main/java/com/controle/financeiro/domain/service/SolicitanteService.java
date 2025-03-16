@@ -27,20 +27,21 @@ public class SolicitanteService {
         BeanUtils.copyProperties(solicitanteDto, solicitante);
         Optional<Solicitante> usuario = solicitanteRepository.findByCpf(solicitante.getCpf());
         if(usuario.isPresent()){
-            throw new BadRequestException();
-        }
+            throw new BadRequestException("Os campos preenchido já existem!");
+        }else{
             return solicitanteRepository.save(solicitante);
+        }
     }
     public Optional<Solicitante> atualizaSolicitante(UUID id, SolicitanteDto solicitanteDto){
         Optional<Solicitante> atualizar = solicitanteRepository.findById(id);
         if(atualizar.isEmpty()){
-            throw new NotFoundException();
+            throw new NotFoundException("Preencha todos os campos! ");
         }else{
             Solicitante solicitante = atualizar.get();
             BeanUtils.copyProperties(solicitanteDto, solicitante);
             solicitanteRepository.save(solicitante);
+            return solicitanteRepository.findById(id);
         }
-        return solicitanteRepository.findById(id);
     }
     public List<Solicitante> listarSolicitante(){
         List<Solicitante> users = solicitanteRepository.findAll();
@@ -52,10 +53,11 @@ public class SolicitanteService {
     }
     public Optional<Solicitante> buscaSolicitante(UUID id, SolicitanteDto solicitanteDto){
         Optional<Solicitante> localizar = solicitanteRepository.findById(id);
-        if(localizar.isPresent()){
-            return localizar;
+        if(localizar.isEmpty()){
+            throw new NotFoundException("Preencha todos os campos! ");
+        }else{
+            return solicitanteRepository.findById(id);
         }
-        throw new NotFoundException();
     }
     public Optional<Solicitante> deletaSolicitante(UUID id){
         Optional<Solicitante> deletarSolicante = solicitanteRepository.findById(id);
@@ -63,7 +65,7 @@ public class SolicitanteService {
             solicitanteRepository.deleteById(id);
             return deletarSolicante;
         }else{
-            throw new DataNotFound();
+            throw new DataNotFound("Dados não encontrado! ");
         }
     }
     public Solicitante adicionaConta(UUID id, ContasAPagar contasAPagar){
