@@ -32,6 +32,7 @@ public class Solicitante {
     private String telefone;
     private String cpf;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
     private List<ContasAPagar> contasAPagar = new ArrayList<>();
+
 }

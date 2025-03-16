@@ -4,20 +4,20 @@ package com.controle.financeiro.infra;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.controle.financeiro.exceptions.BadRequestException;
 import com.controle.financeiro.exceptions.DataNotFound;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler{
     
     @ExceptionHandler(NotFoundException.class)
-    private ResponseEntity<RestErrorMessage> notFoundHandler(NotFoundException exception){
-        RestErrorMessage threadResult = new RestErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(threadResult);
+    private ResponseEntity<RestErrorMessage> NotFoundHandler(NotFoundException exception){
+        RestErrorMessage teste = new RestErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(teste);
     }
 
     @ExceptionHandler(BadRequestException.class)

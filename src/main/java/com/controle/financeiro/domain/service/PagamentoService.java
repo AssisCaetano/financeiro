@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.controle.financeiro.domain.model.ContasAPagar;
 import com.controle.financeiro.domain.model.Pagamento;
 import com.controle.financeiro.domain.repositore.ContasAPagarRepository;
@@ -23,9 +24,7 @@ public class PagamentoService {
 
     @Autowired
     private PagamentoRepository pagamentoRepository;
-        /*
-         * Salvando Pagamento.
-         */
+
         public Pagamento lancarPagamento(UUID id, PagamentoDto pagamentoDto){
             
             Optional<ContasAPagar> cap = contasAPagarRepository.findById(id);
@@ -34,7 +33,7 @@ public class PagamentoService {
             BeanUtils.copyProperties(pagamentoDto, pg);
             conta.setValorPago(pg.getValorDoPagamento());
             conta.setDataDePagamento(LocalDate.now());
-            // Recebo as informaçoes de vencimento e valor da divida de contas a pagar
+            
             pg.setDataDeVencimento(conta.getDataDeVencimento());
             pg.setValorDivida(conta.getSaldoDevedor());
 
@@ -43,23 +42,19 @@ public class PagamentoService {
             if(pg.getDataPagamento().isAfter(conta.getDataDeVencimento())){  
 
                 novoValorDoJuros = conta.getSaldoDevedor().multiply(conta.getTaxaDeJuros());
-                conta.setValorDoJuros(novoValorDoJuros);     
+                conta.setValorDoJuros(novoValorDoJuros);
                 resultado = conta.getSaldoDevedor().add(conta.getValorDoJuros());
                 conta.setSaldoDevedor(resultado);
             
                 BigDecimal  valorRestante;
-                if(pg.getValorDoPagamento().compareTo(novoValorDoJuros) > 0){   
-
+                if(pg.getValorDoPagamento().compareTo(novoValorDoJuros) > 0){
                     valorRestante = conta.getSaldoDevedor().subtract(pg.getValorDoPagamento());
                     conta.setSaldoDevedor(valorRestante);
-
                 }else{
-
                     if(pg.getValorDoPagamento().equals(novoValorDoJuros)){
-
                         conta.getSaldoDevedor();
                 }
-            }           
+            }
         }else{
             if(pg.getDataPagamento().isEqual(conta.getDataDeVencimento())){
                 if(pg.getValorDoPagamento().compareTo(conta.getValorDoJuros()) > 0){
@@ -70,7 +65,6 @@ public class PagamentoService {
         }
             contasAPagarRepository.save(conta);
             return pagamentoRepository.save(pg);
-        
     }
     public List<Pagamento> listaPagamentos(){
         List<Pagamento> pagamentos = pagamentoRepository.findAll();
@@ -81,9 +75,7 @@ public class PagamentoService {
         Optional<Pagamento> byIdPagamento = pagamentoRepository.findById(id);
         return byIdPagamento;
     }
-    /*
-     * Realizando uma atualização de Pagamento.
-     */
+    
     public Optional<Pagamento> atualizaPagamento(UUID id, PagamentoDto pagamentoDto){
         Optional<Pagamento> atualizar = pagamentoRepository.findById(id);
         Pagamento pagamento = atualizar.get();
@@ -91,9 +83,7 @@ public class PagamentoService {
         pagamentoRepository.save(pagamento);
         return atualizar;
     }
-    /*
-     * Deletando um Pagamento.
-     */
+    
     public Optional<Pagamento> deletandoPagamento(UUID id){
         Optional<Pagamento> deleteById = pagamentoRepository.findById(id);
         pagamentoRepository.deleteById(id);
