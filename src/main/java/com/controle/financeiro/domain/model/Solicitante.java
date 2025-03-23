@@ -11,14 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
+
 @Entity
 @Table(name = "Usuario")
 public class Solicitante {
@@ -34,5 +27,77 @@ public class Solicitante {
 
     @OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
     private List<ContasAPagar> contasAPagar = new ArrayList<>();
+
+    public Solicitante() {
+    }
+
+    public Solicitante(UUID idSolicitante, String nome, String sobrenome, String endereco, String telefone, String cpf,
+            List<ContasAPagar> contasAPagar) {
+        this.idSolicitante = idSolicitante;
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.cpf = cpf;
+        this.contasAPagar = contasAPagar;
+    }
+
+    public UUID getIdSolicitante() {
+        return idSolicitante;
+    }
+
+    public void setIdSolicitante(UUID idSolicitante) {
+        this.idSolicitante = idSolicitante;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public List<ContasAPagar> getContasAPagar() {
+        return contasAPagar;
+    }
+
+    public void setContasAPagar(List<ContasAPagar> contasAPagar) {
+        this.contasAPagar = contasAPagar;
+    }
+
+    
 
 }

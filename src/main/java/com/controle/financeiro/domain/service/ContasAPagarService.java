@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.controle.financeiro.domain.model.ContasAPagar;
 import com.controle.financeiro.domain.repositore.ContasAPagarRepository;
 import com.controle.financeiro.dto.ContasAPagarDto;
-import com.controle.financeiro.exceptions.DataNotFound;
 
 @Service
 public class ContasAPagarService {
@@ -49,7 +48,7 @@ public class ContasAPagarService {
         contas.setSaldoDevedor(saldoAtualizado);
         
         if(contaByID.isEmpty()){
-            throw new DataNotFound("Dados não encontrado! ");
+            throw new RuntimeException("Dados não encontrado! ");
         }else{
             contasAPagarRepository.save(contas);
             return contasAPagarRepository.findById(id);
@@ -67,7 +66,7 @@ public class ContasAPagarService {
         Optional<ContasAPagar> contaById = contasAPagarRepository.findById(id);
         BigDecimal saldoReajustado;
         if(contaById.isEmpty()){
-            throw new DataNotFound("Dados não encontrado! ");
+            throw new RuntimeException("Dados não encontrado! ");
         }else if (contaById.get().getDataDeVencimento().isBefore(LocalDate.now())) {
             contaById.get().setStatus("INADIMPLENTE");
             saldoReajustado  = contaById.get().getSaldoDevedor().add(contaById.get().getValorDoJuros());
@@ -80,7 +79,7 @@ public class ContasAPagarService {
     public Optional<ContasAPagar> deletarConta(UUID id){
         Optional<ContasAPagar> byId = contasAPagarRepository.findById(id);
         if(byId.isEmpty()){
-            throw new DataNotFound("Dados não encontrado! ");
+            throw new RuntimeException("Dados não encontrado! ");
         }else{
             contasAPagarRepository.deleteById(id);
             return byId;
