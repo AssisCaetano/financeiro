@@ -11,9 +11,6 @@ import com.controle.financeiro.domain.model.ContasAPagar;
 import com.controle.financeiro.domain.model.Solicitante;
 import com.controle.financeiro.domain.repositore.SolicitanteRepository;
 import com.controle.financeiro.dto.SolicitanteDto;
-import com.controle.financeiro.exceptions.BadRequestException;
-import com.controle.financeiro.exceptions.DataNotFound;
-import com.controle.financeiro.exceptions.NotFoundException;
 
 
 @Service
@@ -27,7 +24,7 @@ public class SolicitanteService {
         BeanUtils.copyProperties(solicitanteDto, solicitante);
         Optional<Solicitante> usuario = solicitanteRepository.findByCpf(solicitante.getCpf());
         if(usuario.isPresent()){
-            throw new BadRequestException("Os campos preenchido já existem!");
+            throw new RuntimeException("Os campos preenchido já existem!");
         }else{
             return solicitanteRepository.save(solicitante);
         }
@@ -35,7 +32,7 @@ public class SolicitanteService {
     public Optional<Solicitante> atualizaSolicitante(UUID id, SolicitanteDto solicitanteDto){
         Optional<Solicitante> atualizar = solicitanteRepository.findById(id);
         if(atualizar.isEmpty()){
-            throw new NotFoundException("Preencha todos os campos! ");
+            throw new RuntimeException("Preencha todos os campos! ");
         }else{
             Solicitante solicitante = atualizar.get();
             BeanUtils.copyProperties(solicitanteDto, solicitante);
@@ -54,7 +51,7 @@ public class SolicitanteService {
     public Optional<Solicitante> buscaSolicitante(UUID id, SolicitanteDto solicitanteDto){
         Optional<Solicitante> localizar = solicitanteRepository.findById(id);
         if(localizar.isEmpty()){
-            throw new NotFoundException("Preencha todos os campos! ");
+            throw new RuntimeException("Preencha todos os campos! ");
         }else{
             return solicitanteRepository.findById(id);
         }
@@ -65,7 +62,7 @@ public class SolicitanteService {
             solicitanteRepository.deleteById(id);
             return deletarSolicante;
         }else{
-            throw new DataNotFound("Dados não encontrado! ");
+            throw new RuntimeException("Dados não encontrado! ");
         }
     }
     public Solicitante adicionaConta(UUID id, ContasAPagar contasAPagar){

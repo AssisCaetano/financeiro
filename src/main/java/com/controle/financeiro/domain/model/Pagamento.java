@@ -13,16 +13,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
 @Table(name = "pagamento")
 public class Pagamento{
     
@@ -41,4 +33,67 @@ public class Pagamento{
     @ManyToOne
     @JoinColumn(name = "idContas", nullable = true)
     private ContasAPagar contasAPagar;
+
+    public Pagamento() {
+    }
+
+    public Pagamento(UUID idPagamento, LocalDate dataDeVencimento, BigDecimal valorDivida, BigDecimal valorDoPagamento,
+            LocalDate dataPagamento, ContasAPagar contasAPagar) {
+        this.idPagamento = idPagamento;
+        this.dataDeVencimento = dataDeVencimento;
+        this.valorDivida = valorDivida;
+        this.valorDoPagamento = valorDoPagamento;
+        this.dataPagamento = dataPagamento;
+        this.contasAPagar = contasAPagar;
+    }
+
+    public UUID getIdPagamento() {
+        return idPagamento;
+    }
+
+    public void setIdPagamento(UUID idPagamento) {
+        this.idPagamento = idPagamento;
+    }
+
+    public LocalDate getDataDeVencimento() {
+        return dataDeVencimento;
+    }
+
+    public void setDataDeVencimento(LocalDate dataDeVencimento) {
+        this.dataDeVencimento = dataDeVencimento;
+    }
+
+    public BigDecimal getValorDivida() {
+        return valorDivida;
+    }
+
+    public void setValorDivida(BigDecimal valorDivida) {
+        this.valorDivida = valorDivida;
+    }
+
+    public BigDecimal getValorDoPagamento() {
+        return valorDoPagamento;
+    }
+
+    public void setValorDoPagamento(BigDecimal valorDoPagamento) {
+        this.valorDoPagamento = valorDoPagamento;
+    }
+
+    public LocalDate getDataPagamento() {
+        return dataPagamento;
+    }
+
+    public void setDataPagamento(LocalDate dataPagamento) {
+        this.dataPagamento = dataPagamento;
+    }
+
+    public ContasAPagar getContasAPagar() {
+        return contasAPagar;
+    }
+
+    public void setContasAPagar(ContasAPagar contasAPagar) {
+        this.contasAPagar = contasAPagar;
+    }
+
+    
 }

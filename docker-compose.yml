@@ -4,16 +4,25 @@ services:
     build: .
     ports:
       - "8080:8080"
-    volumes:
-      - ./app:/app
-  assis:
-    image: oscarfonts/h2
-    container_name: h2-database
-    ports:
-      - "8082:8082"
-    volumes:
-      - h2-data:/opt/h2-data
+    depends_on:
+      - db
     environment:
-      - H2_OPTIONS=-tcp -tclAllowOthers -web -webAllowOthers
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=secret
+      - DB_NAME=financeiro
+  db:
+    image: mysql:8.0
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: financeiro
+    ports:
+      - "3306:3306"
+    cap_add:
+      - SYS_NICE
+    volumes:
+      - mysql_data:/var/lib/mysql
 volumes:
-    h2-data:
+    mysql_data:
