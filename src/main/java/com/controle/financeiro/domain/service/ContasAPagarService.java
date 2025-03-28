@@ -10,6 +10,7 @@ import java.util.UUID;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.controle.financeiro.domain.model.ContasAPagar;
 import com.controle.financeiro.domain.repositore.ContasAPagarRepository;
 import com.controle.financeiro.dto.ContasAPagarDto;
@@ -69,9 +70,9 @@ public class ContasAPagarService {
             throw new RuntimeException("Dados não encontrado! ");
         }else if (contaById.get().getDataDeVencimento().isBefore(LocalDate.now())) {
             contaById.get().setStatus("INADIMPLENTE");
-            saldoReajustado  = contaById.get().getSaldoDevedor().add(contaById.get().getValorDoJuros());
+            saldoReajustado  = contaById.get().getSaldoDevedor().multiply(BigDecimal.ONE.add(contaById.get().getTaxaDeJuros()));
             contaById.get().setReajuste(saldoReajustado);
-        } else {
+        }else {
             contaById.get().setStatus("ADIMPLENTE");
         }
         return contaById;
