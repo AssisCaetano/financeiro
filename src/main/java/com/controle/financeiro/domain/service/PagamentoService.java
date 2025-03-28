@@ -1,10 +1,11 @@
 package com.controle.financeiro.domain.service;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+// import java.math.BigDecimal;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,11 @@ import com.controle.financeiro.domain.model.ContasAPagar;
 import com.controle.financeiro.domain.model.Pagamento;
 import com.controle.financeiro.domain.repositore.ContasAPagarRepository;
 import com.controle.financeiro.domain.repositore.PagamentoRepository;
+import com.controle.financeiro.domain.service.strategy.impl.ControleStrategy;
 import com.controle.financeiro.dto.PagamentoDto;
 
 @Service
-public class PagamentoService {
+public class PagamentoService{
     
     @Autowired
     private ContasAPagarRepository contasAPagarRepository;
@@ -37,32 +39,43 @@ public class PagamentoService {
             pg.setDataDeVencimento(conta.getDataDeVencimento());
             pg.setValorDivida(conta.getSaldoDevedor());
 
-            BigDecimal novoValorDoJuros;
-            BigDecimal resultado;
-            if(pg.getDataPagamento().isAfter(conta.getDataDeVencimento())){  
+            ControleStrategy controle = new ControleStrategy();
+            controle.processarPagamento(conta, pg);
 
-                novoValorDoJuros = conta.getSaldoDevedor().multiply(conta.getTaxaDeJuros());
-                conta.setValorDoJuros(novoValorDoJuros);
-                resultado = conta.getSaldoDevedor().add(conta.getValorDoJuros());
-                conta.setSaldoDevedor(resultado);
+        //     BigDecimal novoValorDoJuros;
+        //     BigDecimal resultado;
+        //     if(pg.getDataPagamento().isAfter(conta.getDataDeVencimento())){
+
+        //         novoValorDoJuros = conta.getSaldoDevedor().multiply(conta.getTaxaDeJuros());
+        //         conta.setValorDoJuros(novoValorDoJuros);
+        //         resultado = conta.getSaldoDevedor().add(conta.getValorDoJuros());
+        //         conta.setSaldoDevedor(resultado);
             
-                BigDecimal  valorRestante;
-                if(pg.getValorDoPagamento().compareTo(novoValorDoJuros) > 0){
-                    valorRestante = conta.getSaldoDevedor().subtract(pg.getValorDoPagamento());
-                    conta.setSaldoDevedor(valorRestante);
-                }else{
-                    if(pg.getValorDoPagamento().equals(novoValorDoJuros)){
-                        conta.getSaldoDevedor();
-                }
-            }
-        }else{
-            if(pg.getDataPagamento().isEqual(conta.getDataDeVencimento())){
-                if(pg.getValorDoPagamento().compareTo(conta.getValorDoJuros()) > 0){
-                    BigDecimal pagamento = conta.getSaldoDevedor().subtract(pg.getValorDoPagamento());
-                    conta.setSaldoDevedor(pagamento);
-                }
-            }
-        }
+        //         BigDecimal  valorRestante;
+        //         if(pg.getValorDoPagamento().compareTo(novoValorDoJuros) > 0){
+        //             valorRestante = conta.getSaldoDevedor().subtract(pg.getValorDoPagamento());
+        //             conta.setSaldoDevedor(valorRestante);
+        //         }else{
+        //             if(pg.getValorDoPagamento().equals(novoValorDoJuros)){
+        //                 conta.getSaldoDevedor();
+        //         }
+        //     }
+        // }else{
+        //     if(pg.getDataPagamento().isEqual(conta.getDataDeVencimento())){
+        //         if(pg.getValorDoPagamento().compareTo(conta.getValorDoJuros()) > 0){
+        //             BigDecimal pagamento = conta.getSaldoDevedor().subtract(pg.getValorDoPagamento());
+        //             conta.setSaldoDevedor(pagamento);
+        //         }
+        //     }
+        // }
+            int diaVencimento = pg.getDataDeVencimento().getDayOfMonth();
+
+            LocalDate novoVencimento = pg.getDataDeVencimento()
+            .plusMonths(1)
+            .withDayOfMonth(Math.min(diaVencimento, pg.getDataDeVencimento().plusMonths(1).lengthOfMonth()));
+
+            conta.setDataDeVencimento(novoVencimento);
+            
             contasAPagarRepository.save(conta);
             return pagamentoRepository.save(pg);
     }
