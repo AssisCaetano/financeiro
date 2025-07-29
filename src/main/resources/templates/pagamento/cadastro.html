@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Cadastro de Novo Empréstimo</title>
+</head>
+<body>
+     <nav class="navbar navbar-expand-lg m-auto navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" th:href="@{/cadastrar/cadastro}">Home</a>
+          <button class="navbar-toggler" navbar navbar-dark bg-dark data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-6 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" th:href="@{/cadastrar/cadastro}">Novo Usuário</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" th:href="@{/contas/conta}">Solicitar Crédito</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="#">Pagamento</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Mais Opções
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" th:href="@{/cadastrar/lista}">Listar de Usuários</a></li>
+				 <li><a class="dropdown-item" th:href="@{/contas/lista}">Listar Contas</a></li>
+				 <li></li><a class="dropdown-item" href="#">Listar de Pagamentos</a></li>
+				 <li><a class="dropdown-item" href="#">Listar de Empréstimos</a></li>
+                </ul>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <div class="container py-4">
+        <div class="container">
+            <div class="col-3 w-90 m-auto py-5">
+                <div class="row">
+                    <form class="formEmprestimo" th:object="${cadastro}" method="post" >
+                        <div class="form-group">
+                            <label for="dataPagamento">Data Pagamento</label>
+                            <input type="date" class="form-control" id="dataPagamento" th:field="*{dataPagamento}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="valorDoPagamento">Valor</label>
+                            <input type="text" class="form-control" id="valorDoPagamento" th:field="*{valorDoPagamento}" required>
+                        </div>
+                        <div class="col-12 my-4">
+                            <button type="submit" class="btn"><i class="fa-solid fa-floppy-disk fa-2xl" style="color: #0f3bbd;"></i> </button>                        
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+</body>
+</html>
