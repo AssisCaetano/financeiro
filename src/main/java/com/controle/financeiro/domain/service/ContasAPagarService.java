@@ -20,20 +20,22 @@ public class ContasAPagarService {
     
     @Autowired
     private ContasAPagarRepository contasAPagarRepository;
-
-    public ContasAPagar saveConta(ContasAPagarDto contasAPagarDto){
-
-        BigDecimal juroEmCimaDoCapitalInicial = contasAPagarDto.capitalInicial().multiply(contasAPagarDto.taxaDeJuros());
-        BigDecimal saldoAtualizado = contasAPagarDto.capitalInicial().add(juroEmCimaDoCapitalInicial);
+   
+    public ContasAPagar saveConta(ContasAPagar contasAPagar){
+    	
+        BigDecimal juroEmCimaDoCapitalInicial = contasAPagar.getCapitalInicial().multiply(contasAPagar.getTaxaDeJuros());
+        BigDecimal saldoAtualizado = contasAPagar.getCapitalInicial().add(juroEmCimaDoCapitalInicial);
+        
         
         ContasAPagar contas = new ContasAPagar();
-        BeanUtils.copyProperties(contasAPagarDto, contas);
+        BeanUtils.copyProperties(contasAPagar, contas);
         
         contas.setDataDoEmprestimo(LocalDate.now());
         contas.setValorDoJuros(juroEmCimaDoCapitalInicial);
         contas.setSaldoDevedor(saldoAtualizado);
         contas.setStatus("ADIMPLENTE");
-
+        
+        System.out.println("CONTAS REGISTRADA NO BANCO!");
         return contasAPagarRepository.save(contas);
     }
     public Optional<ContasAPagar> atualizarContasAPagar(UUID id, ContasAPagarDto contasAPagarDto){
@@ -49,25 +51,33 @@ public class ContasAPagarService {
         contas.setSaldoDevedor(saldoAtualizado);
         
         if(contaByID.isEmpty()){
-            throw new RuntimeException("Dados não encontrado! ");
+//            throw new RuntimeException("Dados não encontrado! ");
+        	System.out.println("DADOS PARA ATUALIZAÇÃO NÃO ENCONTRADA!");
         }else{
             contasAPagarRepository.save(contas);
+            System.out.println("CONTA ATUALIZADA");
             return contasAPagarRepository.findById(id);
         }
+		return contaByID;
     }
     public List<ContasAPagar> getContasAPagarAll(){
         List<ContasAPagar> listaAPagar = contasAPagarRepository.findAll();
         if(listaAPagar.isEmpty()){
-            throw new RuntimeException("Nenhuma informação encontrada!");
+//            throw new RuntimeException("Nenhuma informação encontrada!");
+        	System.out.println("SEM DADOS PARA EXIBIR!");
         }else{
             return listaAPagar;
         }
+        return listaAPagar;
     }
-    public Optional<ContasAPagar> getContasAPagarById(UUID id){
+    
+    //Buscar conta pelo id
+    public Optional<ContasAPagar> getContasAPagarById(UUID id, ContasAPagarDto contasAPagar){
         Optional<ContasAPagar> contaById = contasAPagarRepository.findById(id);
         BigDecimal saldoReajustado;
         if(contaById.isEmpty()){
-            throw new RuntimeException("Dados não encontrado! ");
+//            throw new RuntimeException("Dados não encontrado! ");
+        	System.out.println("NENHUMA CONTA ENCONTRADO OU NÃO TEM CADASTRO!");
         }else if (contaById.get().getDataDeVencimento().isBefore(LocalDate.now())) {
             contaById.get().setStatus("INADIMPLENTE");
             saldoReajustado  = contaById.get().getSaldoDevedor().multiply(BigDecimal.ONE.add(contaById.get().getTaxaDeJuros()));
@@ -80,10 +90,13 @@ public class ContasAPagarService {
     public Optional<ContasAPagar> deletarConta(UUID id){
         Optional<ContasAPagar> byId = contasAPagarRepository.findById(id);
         if(byId.isEmpty()){
-            throw new RuntimeException("Dados não encontrado! ");
+//            throw new RuntimeException("Dados não encontrado! ");
+        	System.out.println("CONTA PARA EXCLUSÃO NÃO FOI ENCONTRADA!");
         }else{
             contasAPagarRepository.deleteById(id);
+            System.out.println("CONTA EXCLUÍDA!");
             return byId;
         }
+        return byId;
     }
 }

@@ -7,22 +7,53 @@ services:
     depends_on:
       - db
     environment:
+      # Variáveis de ambiente para a sua aplicação se conectar ao PostgreSQL
       - DB_HOST=db
-      - DB_USER=root
-      - DB_PASSWORD=secret
-      - DB_NAME=financeiro
+      - DB_USER=admin            # Usuário padrão do PostgreSQL
+      - DB_PASSWORD=Dr0wssap          # Senha que você definiu para o PostgreSQL
+      - DB_NAME=creditoseguro
   db:
-    image: mysql:8.0
-    container_name: mysql_container
+    image: postgres:16              # Imagem oficial do PostgreSQL, versão 16 (pode ajustar a versão)
+    container_name: postgres_container # Nome do contêiner do PostgreSQL
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: financeiro
+      # Variáveis de ambiente para configurar o PostgreSQL
+      POSTGRES_USER: admin       # Define o usuário padrão do banco de dados
+      POSTGRES_PASSWORD: Dr0wssap     # Define a senha para o usuário padrão
+      POSTGRES_DB: creditoseguro       # Cria um banco de dados com este nome
     ports:
-      - "3306:3306"
-    cap_add:
-      - SYS_NICE
+      - "5432:5432"                 # Porta padrão do PostgreSQL (5432)
     volumes:
-      - mysql_data:/var/lib/mysql
+      - pg_data:/var/lib/postgresql/data # Persiste os dados do PostgreSQL
 volumes:
-    mysql_data:
+  pg_data:                          # Define o volume nomeado para os dados do PostgreSQL
+
+
+#version: "3.8"
+#services:
+#  app:
+#    build: .
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - db
+#    environment:
+#      - DB_HOST=db
+#      - DB_USER=root
+#      - DB_PASSWORD=secret
+#      - DB_NAME=financeiro
+#  db:
+#    image: mysql:8.0
+#    container_name: mysql_container
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: secret
+#      MYSQL_DATABASE: financeiro
+#    ports:
+#      - "3306:3306"
+#    cap_add:
+#      - SYS_NICE
+#    volumes:
+#      - mysql_data:/var/lib/mysql
+#volumes:
+#    mysql_data:
