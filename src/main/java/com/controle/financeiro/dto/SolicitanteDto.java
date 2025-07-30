@@ -4,5 +4,5 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record SolicitanteDto(@NotBlank String nome, @NotBlank String sobrenome, @NotBlank String endereco, @NotBlank String telefone, @CPF String cpf) {
+public record SolicitanteDto(@NotBlank String nome, @NotBlank String endereco, @NotBlank String telefone, @CPF String cpf, String descricao) {
 }

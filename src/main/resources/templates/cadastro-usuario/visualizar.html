@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/css/visualizar.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+	integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<title>FINOPEN - Controle de Gastos</title>
+</head>
+
+<body>
+	
+	<nav class="navbar navbar-expand-lg m-auto navbar navbar-dark bg-dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" th:href="@{/cadastrar/home}">FINOPEN</a>
+			<button class="navbar-toggler" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-6 mb-lg-0">
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" th:href="@{/cadastrar/cadastro}">Novo
+							Usuário</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						th:href="@{/contas/conta}">Solicitar Crédito</a></li>
+					
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle active" href="#"
+						id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+						aria-expanded="false"> Mais Opções </a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item" th:href="@{/cadastrar/lista}">Listar
+									de Usuários</a></li>
+							<li><a class="dropdown-item" th:href="@{/contas/lista}">Listar
+									Contas</a></li>
+							<li><a class="dropdown-item" href="#"></a></li>
+							<li><a class="dropdown-item" href="#"></a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <div class="card card-custom">
+                    <h1 class="card-title text-center mb-4">Detalhamento do Solicitante e Suas Contas</h1>
+
+                    <div class="card-body">
+                        <h5 class="mb-3">Dados do Solicitante</h5>
+                        <div th:object="${cadastro}">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="nome" class="form-label">Nome</label>
+                                    <input type="text" class="form-control" id="nome" th:field="*{nome}" readonly>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="cpf" class="form-label">CPF</label>
+                                    <input type="text" class="form-control" id="cpf" th:field="*{cpf}" readonly>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="telefone" class="form-label">Telefone</label>
+                                    <input type="text" class="form-control" id="telefone" th:field="*{telefone}" readonly>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="endereco" class="form-label">Endereço</label>
+                                    <input type="text" class="form-control" id="endereco" th:field="*{endereco}" readonly>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="descricao" class="form-label">Descrição</label>
+                                <input type="text" class="form-control" id="descricao" th:field="*{descricao}" readonly>
+                            </div>
+                            <input type="hidden" id="id" th:field="*{idSolicitante}">
+                        </div>
+
+                        <hr class="my-4">
+
+                        <h5 class="mb-3">Contas Associadas</h5>
+
+                        <div th:if="${#lists.isEmpty(contas)}" class="alert alert-info" role="alert">
+                            Nenhuma conta associada a este solicitante.
+                        </div>
+                        <div th:unless="${#lists.isEmpty(contas)}">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover align-middle">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Data</th>
+                                            <th>Vencimento</th>
+                                            <th>Status</th>
+                                            <th>Solicitado</th>
+                                            <th>Taxa</th>
+                                            <th>Juros</th>
+                                            <th>Adicional</th>
+                                            <th>Valor</th>
+                                            <th>Pagamento</th>
+                                            <th>Pago</th>
+                                            <th>Saldo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="conta : ${contas}">
+                                            <td th:text="${#temporals.format(conta.dataDoEmprestimo, 'dd-MM-yyyy')}"></td>
+                                            <td th:text="${#temporals.format(conta.dataDeVencimento, 'dd-MM-yyyy')}"></td>
+                                            <td th:text="${conta.status}"></td>
+                                            <td th:text="${#numbers.formatCurrency(conta.capitalInicial)}"></td>
+                                            <td th:text="${#numbers.formatDecimal(conta.taxaDeJuros, 0, 'COMMA', 2, 'POINT')} + '%'"></td>
+                                            <td th:text="${#numbers.formatCurrency(conta.valorDoJuros)}"></td>
+                                            <td th:text="${#temporals.format(conta.dataNovoCredito, 'dd-MM-yyyy')}"></td>
+                                            <td th:text="${#numbers.formatCurrency(conta.novoCredito)}"></td>
+                                            <td th:text="${#temporals.format(conta.dataDePagamento, 'dd-MM-yyyy')}"></td>
+                                            <td th:text="${#numbers.formatCurrency(conta.valorPago)}"></td>
+                                            <td th:text="${#numbers.formatCurrency(conta.saldoDevedor)}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+		crossorigin="anonymous"></script>
+	
+	<style>
+		.container1 {
+			margin-top: auto;
+			/* Empurra o container para o final da página */
+			text-align: center;
+			/* Centraliza o texto dentro do container */
+			padding: 20px;
+			/* Adiciona um pouco de preenchimento, se desejar */
+			width: 100%;
+			/* Ocupa a largura total */
+		}
+	</style>
+	<div class="container1">
+		<span class="footer-copy">&copy; Sistema desenvolvido em 2025 por F12Coud.</span>
+		<p><span class="footer-copy">Telefone para contato (85)98583-8758.</span></p>
+	</div>
+</body>
+</html>
