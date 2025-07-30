@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<<<<<<< HEAD
 
 <head>
     <meta charset="UTF-8">
@@ -180,3 +181,46 @@
 <!--</body>-->
 <!--	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>-->
 <!--</html>-->
+=======
+<!-- Qualquer coisa -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body>
+	<nav class="menu-lateral">
+		<div class="btn-expandir">
+			<i class="bi bi-list"></i>
+		</div>
+		<ul>
+			<li class="item-menu">
+				<a th:href="@{cadastro}">
+					<span class="icon"><i class="bi bi-house-door"></i></span>
+					<span class="txt-link">Home</span>
+				</a>
+			</li>
+			<li class="item-menu">
+				<a th:href="@{./cadastro}">
+					<span class="icon"><i class="bi bi-person-fill-add"></i></span>
+					<span class="txt-link">Solicitante</span>
+				</a>
+			</li>
+			<li class="item-menu">
+				<a href="#">
+					<span class="icon"><i class="bi bi-bank"></i></span>
+					<span class="txt-link">Conta</span>
+				</a>
+			</li>
+			<li class="item-menu">
+				<a href="#">
+					<span class="icon"><i class="bi bi-cash-coin"></i></span>
+					<span class="txt-link">Pagamento</span>
+				</a>
+			</li>
+		</ul>
+	</nav>
+</body>
+</html>
+>>>>>>> 008e66adaf34901ab00fd9497471241fb956522a

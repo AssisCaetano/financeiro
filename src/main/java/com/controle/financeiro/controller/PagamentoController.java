@@ -1,33 +1,40 @@
 package com.controle.financeiro.controller;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 //import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+=======
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+>>>>>>> 008e66adaf34901ab00fd9497471241fb956522a
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.controle.financeiro.domain.model.ContasAPagar;
+<<<<<<< HEAD
 import com.controle.financeiro.domain.model.NovoEmprestimo;
+=======
+>>>>>>> 008e66adaf34901ab00fd9497471241fb956522a
 import com.controle.financeiro.domain.model.Pagamento;
 import com.controle.financeiro.domain.service.ContasAPagarService;
 import com.controle.financeiro.domain.service.PagamentoService;
 import com.controle.financeiro.dto.ContasAPagarDto;
+<<<<<<< HEAD
 import com.controle.financeiro.dto.NovoEmprestimoDto;
+=======
+>>>>>>> 008e66adaf34901ab00fd9497471241fb956522a
 import com.controle.financeiro.dto.PagamentoDto;
-import org.springframework.web.bind.annotation.PutMapping;
 
 
 @Controller

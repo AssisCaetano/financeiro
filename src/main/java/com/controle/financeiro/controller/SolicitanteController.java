@@ -24,12 +24,15 @@ public class SolicitanteController {
 	@Autowired
 	private SolicitanteService solicitarService;
 
+<<<<<<< HEAD
 	//Exibe a home no navegador
 	@GetMapping("/home")
 	public String exibirHome() {
 		return "home";
 	}
 	
+=======
+>>>>>>> 008e66adaf34901ab00fd9497471241fb956522a
 	//Exibe o formulario no navegador
 	@GetMapping("/cadastro")
 	public String exibir(Model model) {
