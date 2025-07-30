@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,20 +23,19 @@ import com.controle.financeiro.dto.SolicitanteDto;
 
 @Controller
 @RequestMapping("/cadastrar")
+@Controller
+@RequestMapping("/cadastrar")
 public class SolicitanteController {
 
 	@Autowired
 	private SolicitanteService solicitarService;
 
-<<<<<<< HEAD
 	//Exibe a home no navegador
 	@GetMapping("/home")
 	public String exibirHome() {
 		return "home";
 	}
 	
-=======
->>>>>>> 008e66adaf34901ab00fd9497471241fb956522a
 	//Exibe o formulario no navegador
 	@GetMapping("/cadastro")
 	public String exibir(Model model) {
