@@ -13,7 +13,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>financeiro</name>
 	<description>Demo project for Spring Boot</description>
-	<packaging>war</packaging>
 	<url/>
 	<licenses>
 		<license/>
@@ -47,20 +46,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> e49875669f84cce08f6cf34cd84d1bd6521394f9
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 008e66adaf34901ab00fd9497471241fb956522a
->>>>>>> e49875669f84cce08f6cf34cd84d1bd6521394f9
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
@@ -69,15 +54,7 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
-<<<<<<< HEAD
-		</dependency>
-=======
-<<<<<<< HEAD
-		</dependency>
-=======
 		</dependency> 
->>>>>>> 008e66adaf34901ab00fd9497471241fb956522a
->>>>>>> e49875669f84cce08f6cf34cd84d1bd6521394f9
 		<!-- <dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
