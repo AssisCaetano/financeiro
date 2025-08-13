@@ -8,7 +8,7 @@ services:
       # Use o volume para mapear o .war diretamente do seu projeto para o container
       # Isso facilita o desenvolvimento, pois você não precisa reconstruir a imagem toda hora.
       # Remova ou comente essa linha se quiser que o Dockerfile copie o .war de forma definitiva
-      - ./target/financeiro-0.0.1-SNAPSHOT.war:/usr/local/tomcat/webapps/finopen.war
+      - ./target/finopen.war:/usr/local/tomcat/webapps/app.war
     ports:
       - "8080:8080"
     depends_on:

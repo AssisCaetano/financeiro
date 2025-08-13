@@ -25,7 +25,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()  // URLs públicas
                 .requestMatchers("/login").permitAll() // Páginas públicas
-//                .requestMatchers("/cadastroLogin").permitAll() // Páginas públicas
+                .requestMatchers("/cadastroLogin").permitAll() // Páginas públicas
                 
              // URLs Protegidas (somente usuários logados podem acessar)
                 .requestMatchers("/**").authenticated()
