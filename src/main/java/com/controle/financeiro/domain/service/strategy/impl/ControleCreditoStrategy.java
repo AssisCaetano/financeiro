@@ -12,12 +12,13 @@ public class ControleCreditoStrategy {
 
         CreditoStrategy creditoStrategy;
 
-            if(contas.getSaldoDevedor().compareTo(BigDecimal.ZERO) <= 0){
+            if(contas.getSaldoDevedor().compareTo(BigDecimal.ZERO) == 0){
                 creditoStrategy = new ValidarCredito();
             }else if(contas.getSaldoDevedor().compareTo(BigDecimal.ZERO) > 0 ){
                 creditoStrategy = new ValidarCredito();
             }else{
                 throw new IllegalArgumentException("Opção de credito ivalido. ");
+            
             }
             creditoStrategy.lancamentoDeCredito(credito, contas);
     }

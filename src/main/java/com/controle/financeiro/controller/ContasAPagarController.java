@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.controle.financeiro.domain.model.ContasAPagar;
 import com.controle.financeiro.domain.model.Solicitante;
 import com.controle.financeiro.domain.service.ContasAPagarService;
 import com.controle.financeiro.domain.service.SolicitanteService;
 import com.controle.financeiro.dto.ContasAPagarDto;
-import com.controle.financeiro.dto.SolicitanteDto;
 
 
 @Controller
@@ -46,10 +46,14 @@ public class ContasAPagarController {
 
     //Realiza a inserção dos dados no bd
     @PostMapping("/conta")
-    public String saveConta(@ModelAttribute("conta") ContasAPagar contasAPagar) {
-    	contasAPagarService.saveConta(contasAPagar);
+    public String saveConta(RedirectAttributes attr,@ModelAttribute("conta") ContasAPagar contasAPagar) {
     	
-		return "redirect:./lista";
+//    	if(result.hasErrors()) {
+//    		attr.addFlashAttribute("org.springframework.validation.BindingResult.cadastro", result);
+//    	}
+    	contasAPagarService.saveConta(contasAPagar);
+    	attr.addFlashAttribute("success", "Conta associado ao solicitante com sucesso.");
+		return "redirect:./conta";
 	}
     
     //Método responsável por exibir a lista de contas
@@ -72,23 +76,44 @@ public class ContasAPagarController {
     
 	//Método responsável por realizar a atualização das informações
 	@PostMapping("/conta/{id}")
-	public String salvarAtualizarConta(@PathVariable UUID id, ContasAPagarDto contasAPagar, Model model) {
+	public String salvarAtualizarConta(@PathVariable UUID id, ContasAPagarDto contasAPagar, RedirectAttributes attr, Model model) {
 		Optional<ContasAPagar> conta = contasAPagarService.atualizarContasAPagar(id, contasAPagar);
-		model.addAttribute("conta", conta);
-		
-		return "redirect:/contas/lista";
+		try {
+			model.addAttribute("conta", conta);
+			attr.addFlashAttribute("success", "Conta Atualizada com sucesso.");
+			
+		} catch (Exception e) {
+			attr.addFlashAttribute("fail", "Conta Atualizada com sucesso.");
+			
+		}
+
+		return "redirect:/contas/conta";
 	}
 
 	//Método responsável por excluir um conta
 	@GetMapping("/delete/{id}")
-	public String deletarConta(@PathVariable UUID id) {
-		contasAPagarService.deletarConta(id);
-		return "redirect:/contas/lista";
+	public String deletarConta(@PathVariable UUID id, RedirectAttributes attr) {	
+		try {
+			contasAPagarService.deletarConta(id);
+			attr.addFlashAttribute("success", "Conta excluída com sucesso! ");
+			return "redirect:/contas/lista";
+		} catch (Exception e) {
+			attr.addFlashAttribute("fail", "Erro ao Excluír conta!, Existe um Crédito ou um Pagamento associado à essa CONTA.");
+			return "redirect:/contas/lista";	
+		}		
 	}
 	
-//	Recebendo uma lista de usuários
+	//Recebendo uma lista de usuários
 	@ModelAttribute("usuarios")
 	public List<Solicitante> listaDeSolicitante(){
 		return solicitanteService.listarSolicitante();
 	}
+	
+	//BUSCAR CONTA ATRAVES DO SOLICITANTE
+	@GetMapping("/buscar/nome")
+	public String buscarContaPorSolicitante(@RequestParam("nome")String nome, Model model) {
+		model.addAttribute("lista", contasAPagarService.buscarContaPorSolicitante(nome));
+		return "cadastro-conta/lista";
+	}
+
 }

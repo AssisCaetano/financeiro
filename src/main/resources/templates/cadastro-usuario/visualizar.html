@@ -23,9 +23,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" th:href="@{/cadastrar/home}">Home</a>
-                    </li>
+                   
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/cadastrar/cadastro}">Cadastrar Solicitante</a>
                     </li>
@@ -91,10 +89,11 @@
                                 <thead class="table-dark">
                                     <tr>
                                        
-                                        <th scope="col">Vencimento</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Capital Inicial</th>
-                                        <th scope="col">Juros</th>
+                                        <th scope="col">Data Vencimento</th>
+<!--                                        <th scope="col">Status</th>-->
+<!--                                        <th scope="col">Capital Inicial</th>-->
+                                       <th scope="col">Juros</th>
+                                        <th scope="col">Data Crédito</th>
                                         <th scope="col">Novo Crédito</th>
                                         <th scope="col">Data Pagamento</th>
                                         <th scope="col">Valor Pago</th>
@@ -105,9 +104,10 @@
                                     <tr th:each="conta : ${contas}">
                                        
                                         <td th:text="${#temporals.format(conta.dataDeVencimento, 'dd-MM-yyyy')}"></td>
-                                        <td th:text="${conta.status}"></td>
-                                        <td th:text="${#numbers.formatCurrency(conta.capitalInicial)}"></td>
-                                        <td th:text="${#numbers.formatCurrency(conta.valorDoJuros)}"></td>
+<!--                                        <td th:text="${conta.status}"></td>-->
+<!--                                        <td th:text="${#numbers.formatCurrency(conta.capitalInicial)}"></td>-->
+                                       <td th:text="${#numbers.formatCurrency(conta.valorDoJuros)}"></td>
+                                        <td th:text="${#temporals.format(conta.dataNovoCredito, 'dd-MM-yyyy')}"></td>
                                         <td th:text="${#numbers.formatCurrency(conta.novoCredito)}"></td>
                                         <td th:text="${#temporals.format(conta.dataDePagamento, 'dd-MM-yyyy')}"></td>
                                         <td th:text="${#numbers.formatCurrency(conta.valorPago)}"></td>
@@ -118,12 +118,15 @@
                         </div>
                     </div>
                     <div class="card-footer text-center">
-                        <a th:href="@{/contas/conta}" class="btn btn-success me-2">
+                        <a th:href="@{/contas/conta}" class="btn btn-sm btn-outline-primary me-1">
                             <i class="fa-solid fa-plus-circle me-2"></i> Adicionar Nova Conta
                         </a>
-                        <a th:href="@{/novo_credito/cadastro/{id}(id=${cadastro.idSolicitante})}" class="btn btn-info text-white">
-                            <i class="fa-brands fa-adversal me-2"></i> Adicionar Novo Crédito
-                        </a>
+<!--                        <a th:href="@{/novo_credito/cadastro/{id}(id=${cadastro.idSolicitante})}" class="btn btn-sm btn-outline-info me-1">-->
+<!--                            <i class="fa-brands fa-adversal me-2"></i> Adicionar Novo Crédito-->
+<!--                        </a>-->
+<!--                        <a th:href="@{/cadastrar_pagamento/cadastro/{id}(id=${cadastro.idSolicitante})}" class="btn btn-sm btn-outline-success">-->
+<!--                            <i class="fa-brands fa-cc-amazon-pay"></i> Adicionar Novo Crédito-->
+<!--                        </a>-->
                     </div>
                 </div>
             </div>

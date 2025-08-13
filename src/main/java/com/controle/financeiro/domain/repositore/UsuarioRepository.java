@@ -1,0 +1,13 @@
+package com.controle.financeiro.domain.repositore;
+
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.controle.financeiro.domain.model.Usuario;
+
+public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
+	
+	 Optional<Usuario> findByUsername(String username);
+}

@@ -1,17 +1,20 @@
-FROM ubuntu:latest AS build
+# Usa uma imagem oficial do Tomcat 10 com JDK 17
+FROM tomcat:10.1.20-jdk17-temurin-jammy
 
-RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y
-COPY . .
+# Remove o aplicativo de exemplo que vem no Tomcat
+RUN rm -rf /usr/local/tomcat/webapps/ROOT
+RUN rm -rf /usr/local/tomcat/webapps/docs
+RUN rm -rf /usr/local/tomcat/webapps/examples
+RUN rm -rf /usr/local/tomcat/webapps/host-manager
+RUN rm -rf /usr/local/tomcat/webapps/manager
 
-RUN apt-get install maven -y
-RUN mvn clean install
+# Copia seu arquivo .war para a pasta webapps do Tomcat
+# O nome do arquivo será 'seu-projeto.war'
+# A aplicação estará acessível em http://localhost:8080/seu-projeto/
+# Ajuste o caminho 'target/seu-projeto.war' para o local onde seu .war é gerado.
+COPY target/financeiro-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/finopen.war
 
-FROM openjdk:17-jdk-slim
-
+# Expõe a porta padrão do Tomcat
 EXPOSE 8080
-
-COPY --from=build /target/financeiro-0.0.1-SNAPSHOT.jar app.jar
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
 
 

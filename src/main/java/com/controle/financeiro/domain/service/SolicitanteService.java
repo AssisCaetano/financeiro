@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.controle.financeiro.domain.model.ContasAPagar;
 import com.controle.financeiro.domain.model.Solicitante;
 import com.controle.financeiro.domain.repositore.SolicitanteRepository;
 import com.controle.financeiro.dto.ContasAPagarDto;
@@ -21,22 +20,25 @@ public class SolicitanteService {
 
     @Autowired
     private SolicitanteRepository solicitanteRepository;
-
+	
+    //ESSE METODO É RESPONSAVEL POR SALVAR AS INFORMAÇÕES DO USUÁRIO NO BANCO
     public Solicitante salvarUsuario(SolicitanteDto solicitanteDto){
-        Solicitante solicitante = new Solicitante();
-        BeanUtils.copyProperties(solicitanteDto, solicitante);
-        Optional<Solicitante> usuario = solicitanteRepository.findByCpf(solicitante.getCpf());
-        if(usuario.isPresent()){
-//            throw new RuntimeException("Os campos preenchido já existem!");
-        	System.out.println("PREENCHA TODOS OS CAMPOS!");
-        }else{
-        	System.out.println("SOLICITANTE CADASTRADO!");
-            return solicitanteRepository.save(solicitante);
-        }
-        return solicitante;
+    	
+    		Solicitante solicitante = new Solicitante();
+            BeanUtils.copyProperties(solicitanteDto, solicitante);
+            Solicitante validarCPF = solicitanteRepository.findByCpf(solicitante.getCpf());
+        	if(validarCPF != null) {
+        		throw new RuntimeException("CPF já cadastrado! ");      	
+        	}else {
+        		solicitanteRepository.save(solicitante);
+        	}
+
+		return solicitante;
     }
     
+    //MÉTODO RESPONSAVÉL POR AUTALIZAR UM SOLICITANTE MAIS ANTES VERIFICA SE O ID NAO ESTÁ VAZIO
     public Optional<Solicitante> atualizaSolicitante(UUID id, SolicitanteDto solicitanteDto){
+    	
         Optional<Solicitante> atualizar = solicitanteRepository.findById(id);
         if(atualizar.isEmpty()){
 //            throw new RuntimeException("Preencha todos os campos! ");
@@ -50,30 +52,30 @@ public class SolicitanteService {
         return atualizar;
     }
     
+    
     public List<Solicitante> listarSolicitante(){
         List<Solicitante> users = solicitanteRepository.findAll();
         if(users.isEmpty()){
 //            throw new RuntimeException("Nenhuma informação encontrada!");
-        	System.out.println("NENHUM SOLICITANTE CADASTRADO!");
         }else{
         	System.out.println("SOLICITANTE CADASTRADO!");
             return solicitanteRepository.findAll();
             
         }
 		return users;
+		
     }
+    
     
     public Optional<Solicitante> buscaSolicitante(UUID id, SolicitanteDto solicitanteDto){
         Optional<Solicitante> localizar = solicitanteRepository.findById(id);
         if(localizar.isEmpty()){
 //            throw new RuntimeException("Preencha todos os campos! ");
-        	System.out.println("A BUSCA PELO ID NÃO TROUXE NENHUM RESULTADO!");
         }else{
         	System.out.println("SOLICITANTE LOCALIZADO!");
             return solicitanteRepository.findById(id);
             
         }
-        
         return localizar;
     }
     
@@ -103,6 +105,10 @@ public class SolicitanteService {
         }
         System.out.println("SOLICITANTE EXCLUÍDO!");
         return deletaSolicitante(id);
+    }
+    
+    public List<Solicitante> buscarPorNome(String nome){
+    	return solicitanteRepository.buscarPorNome(nome);
     }
 
 }

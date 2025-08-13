@@ -31,7 +31,7 @@ public class Pagamento{
     private LocalDate dataPagamento;
 
     @ManyToOne
-    @JoinColumn(name = "idContas", nullable = true)
+    @JoinColumn(name = "Contas", nullable = true)
     private ContasAPagar contasAPagar;
 
     public Pagamento() {

@@ -12,7 +12,7 @@ public class ControlePagamentoStrategy {
 
         if(pg.getDataPagamento().isAfter(conta.getDataDeVencimento())){
             pgStrategy = new PagamentoAtrasado();
-        }else if(pg.getDataPagamento().isEqual(conta.getDataDeVencimento())){
+        }else if(!pg.getDataPagamento().isAfter(conta.getDataDeVencimento())){
             pgStrategy = new PagamentoNoPraso();
         }else{
             throw new IllegalArgumentException("Forma de pagamento invalida. ");

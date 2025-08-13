@@ -21,10 +21,8 @@ public class NovoEmprestimo {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID idCredito;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate dataNovoCredito;
-
     private BigDecimal novoCredito;
 
     @ManyToOne
@@ -41,12 +39,14 @@ public class NovoEmprestimo {
         this.novoCredito = novoCredito;
         this.contasAPagar = contasAPagar;
     }
+    
+    
 
     public UUID getIdCredito() {
         return idCredito;
     }
 
-    public void setIdCredito(UUID idCredito) {
+	public void setIdCredito(UUID idCredito) {
         this.idCredito = idCredito;
     }
 

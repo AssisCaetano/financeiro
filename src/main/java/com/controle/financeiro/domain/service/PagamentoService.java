@@ -14,6 +14,7 @@ import com.controle.financeiro.domain.model.Pagamento;
 import com.controle.financeiro.domain.repositore.ContasAPagarRepository;
 import com.controle.financeiro.domain.repositore.PagamentoRepository;
 import com.controle.financeiro.domain.service.strategy.impl.ControlePagamentoStrategy;
+import com.controle.financeiro.domain.service.strategy.impl.ControlePagamentoStrategy;
 import com.controle.financeiro.dto.PagamentoDto;
 
 @Service
@@ -28,14 +29,19 @@ public class PagamentoService{
         public Pagamento lancarPagamento(UUID id, PagamentoDto pagamentoDto){
             
             Optional<ContasAPagar> cap = contasAPagarRepository.findById(id);
+            
             ContasAPagar conta = cap.get();
             Pagamento pg = new Pagamento();
+            
             BeanUtils.copyProperties(pagamentoDto, pg);
+            
             conta.setValorPago(pg.getValorDoPagamento());
             conta.setDataDePagamento(LocalDate.now());
             
+            pg.setContasAPagar(conta);
+            
             pg.setDataDeVencimento(conta.getDataDeVencimento());
-            pg.setValorDivida(conta.getSaldoDevedor());
+            pg.setValorDivida(conta.getCapitalInicial());
 
             int diaVencimento = pg.getDataDeVencimento().getDayOfMonth();
 
@@ -49,7 +55,7 @@ public class PagamentoService{
             controle.processarPagamento(conta, pg);
 
             conta.setDataDeVencimento(novoVencimento);
-            
+           
             contasAPagarRepository.save(conta);
             return pagamentoRepository.save(pg);
     }
@@ -58,6 +64,7 @@ public class PagamentoService{
         return pagamentos;
     }
 
+    
     public Optional<Pagamento> pagamentoId(UUID id){
         Optional<Pagamento> byIdPagamento = pagamentoRepository.findById(id);
         return byIdPagamento;

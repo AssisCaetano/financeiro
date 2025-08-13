@@ -1,34 +1,29 @@
 package com.controle.financeiro.controller;
 
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-//import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.controle.financeiro.domain.model.ContasAPagar;
 import com.controle.financeiro.domain.model.NovoEmprestimo;
 import com.controle.financeiro.domain.model.Pagamento;
 import com.controle.financeiro.domain.service.ContasAPagarService;
+import com.controle.financeiro.domain.service.ContasAPagarService;
 import com.controle.financeiro.domain.service.PagamentoService;
 import com.controle.financeiro.dto.ContasAPagarDto;
-import com.controle.financeiro.dto.NovoEmprestimoDto;
-import com.controle.financeiro.dto.PagamentoDto;
-import org.springframework.web.bind.annotation.PutMapping;
 
+import com.controle.financeiro.dto.PagamentoDto;
 
 @Controller
 @RequestMapping("/cadastrar_pagamento")
@@ -49,11 +44,21 @@ public class PagamentoController {
     }
     
     @PostMapping("/cadastro/{id}")
-    public String salvar(@PathVariable("id")UUID id, @ModelAttribute("cadastro") PagamentoDto pagamento) {
+    public String salvar(RedirectAttributes attr,@PathVariable("id")UUID id, @ModelAttribute("cadastro") PagamentoDto pagamento) {
+    	
     	pagamentoService.lancarPagamento(id, pagamento);
+    	attr.addFlashAttribute("success", "Pagamento registrado com sucesso.");
     	return "pagamento/cadastro";
-    }
-
+    	
+        }
+    	
+		// LISTANDO OS CRÉDITOS ADICIONAIS
+		@GetMapping("/lista")
+		public String lista(Model model) {
+			List<Pagamento> pg = pagamentoService.listaPagamentos();
+			model.addAttribute("lista", pg);
+			return "pagamento/lista";
+			
 //    @PostMapping("pagamento/{id}")
 //    public ResponseEntity<Pagamento> lancarPagamento(@PathVariable(value = "id")UUID id, @RequestBody PagamentoDto pagamentoDto){
 //        return ResponseEntity.status(HttpStatus.CREATED).body(pagamentoService.lancarPagamento(id, pagamentoDto));
@@ -78,4 +83,5 @@ public class PagamentoController {
 //    public ResponseEntity<Optional<Pagamento>> delatandoPagamento(@PathVariable(value = "id")UUID id){
 //        return ResponseEntity.status(HttpStatus.OK).body(pagamentoService.deletandoPagamento(id));
 //    }
+    }
 }
