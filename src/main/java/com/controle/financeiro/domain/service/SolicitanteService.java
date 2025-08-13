@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.controle.financeiro.domain.model.Solicitante;
 import com.controle.financeiro.domain.repositore.SolicitanteRepository;
+import com.controle.financeiro.dto.ContasAPagarDto;
 import com.controle.financeiro.dto.SolicitanteDto;
 
 
@@ -40,30 +41,38 @@ public class SolicitanteService {
     	
         Optional<Solicitante> atualizar = solicitanteRepository.findById(id);
         if(atualizar.isEmpty()){
-            throw new RuntimeException("Preencha todos os campos! ");
+//            throw new RuntimeException("Preencha todos os campos! ");
+        	System.out.println("POR FAVOR PREENCHER TODOS OS CAMPOS!");
         }else{
             Solicitante solicitante = atualizar.get();
             BeanUtils.copyProperties(solicitanteDto, solicitante);
             solicitanteRepository.save(solicitante);
             return solicitanteRepository.findById(id);
         }
+        return atualizar;
     }
+    
     
     public List<Solicitante> listarSolicitante(){
         List<Solicitante> users = solicitanteRepository.findAll();
         if(users.isEmpty()){
 //            throw new RuntimeException("Nenhuma informação encontrada!");
         }else{
+        	System.out.println("SOLICITANTE CADASTRADO!");
             return solicitanteRepository.findAll();
+            
         }
 		return users;
+		
     }
+    
     
     public Optional<Solicitante> buscaSolicitante(UUID id, SolicitanteDto solicitanteDto){
         Optional<Solicitante> localizar = solicitanteRepository.findById(id);
         if(localizar.isEmpty()){
 //            throw new RuntimeException("Preencha todos os campos! ");
         }else{
+        	System.out.println("SOLICITANTE LOCALIZADO!");
             return solicitanteRepository.findById(id);
             
         }

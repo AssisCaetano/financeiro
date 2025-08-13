@@ -46,22 +46,6 @@ public class NovoEmprestimo {
         return idCredito;
     }
 
-//	public LocalDate getDataVencimento() {
-//		return dataVencimento;
-//	}
-//
-//	public void setDataVencimento(LocalDate dataVencimento) {
-//		this.dataVencimento = dataVencimento;
-//	}
-//
-//	public BigDecimal getSaldo() {
-//		return saldo;
-//	}
-//
-//	public void setSaldo(BigDecimal saldo) {
-//		this.saldo = saldo;
-//	}
-
 	public void setIdCredito(UUID idCredito) {
         this.idCredito = idCredito;
     }

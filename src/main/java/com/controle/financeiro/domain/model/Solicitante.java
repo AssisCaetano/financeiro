@@ -7,6 +7,7 @@ import java.util.UUID;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -51,7 +52,6 @@ public class Solicitante {
         return idSolicitante;
     }
 
-
 	public void setIdSolicitante(UUID idSolicitante) {
         this.idSolicitante = idSolicitante;
     }
@@ -95,17 +95,6 @@ public class Solicitante {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
-
-//	public ContasAPagar getContasAPagar() {
-//		return contasAPagar;
-//	}
-//
-//
-//	public void setContasAPagar(ContasAPagar contasAPagar) {
-//		this.contasAPagar = contasAPagar;
-//	}
-
 
     public List<ContasAPagar> getContasAPagar() {
         return contasAPagar;

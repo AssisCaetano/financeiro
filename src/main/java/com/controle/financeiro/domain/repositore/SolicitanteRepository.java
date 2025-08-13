@@ -12,6 +12,8 @@ import com.controle.financeiro.domain.model.Solicitante;
 
 
 
+
+
 public interface SolicitanteRepository extends JpaRepository<Solicitante, UUID>{
 	
 	Solicitante findByCpf(String cpf);

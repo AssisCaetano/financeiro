@@ -25,12 +25,15 @@ public class ContasAPagar {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID idConta;
 
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private LocalDate dataDoEmprestimo;
+	
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private LocalDate dataDeVencimento;
 	private String status;
+	
 
 //	@Column(nullable = false, precision = 10, scale = 2)
 	private BigDecimal reajuste = BigDecimal.ZERO;
@@ -52,6 +55,7 @@ public class ContasAPagar {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "solicitante_id")
 	private Solicitante solicitante;
+
 
 	public ContasAPagar() {
 	}
@@ -77,116 +81,117 @@ public class ContasAPagar {
 		this.solicitante = solicitante;
 	}
 
-	public UUID getIdConta() {
-		return idConta;
-	}
+    public UUID getIdConta() {
+        return idConta;
+    }
 
-	public void setIdConta(UUID idConta) {
-		this.idConta = idConta;
-	}
+    public void setIdConta(UUID idConta) {
+        this.idConta = idConta;
+    }
 
-	public LocalDate getDataDoEmprestimo() {
-		return dataDoEmprestimo;
-	}
+    public LocalDate getDataDoEmprestimo() {
+        return dataDoEmprestimo;
+    }
 
-	public void setDataDoEmprestimo(LocalDate dataDoEmprestimo) {
-		this.dataDoEmprestimo = dataDoEmprestimo;
-	}
+    public void setDataDoEmprestimo(LocalDate dataDoEmprestimo) {
+        this.dataDoEmprestimo = dataDoEmprestimo;
+    }
 
-	public LocalDate getDataDeVencimento() {
-		return dataDeVencimento;
-	}
+    public LocalDate getDataDeVencimento() {
+        return dataDeVencimento;
+    }
 
-	public void setDataDeVencimento(LocalDate dataDeVencimento) {
-		this.dataDeVencimento = dataDeVencimento;
-	}
+    public void setDataDeVencimento(LocalDate dataDeVencimento) {
+        this.dataDeVencimento = dataDeVencimento;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public BigDecimal getReajuste() {
-		return reajuste;
-	}
+    public BigDecimal getReajuste() {
+        return reajuste;
+    }
 
-	public void setReajuste(BigDecimal reajuste) {
-		this.reajuste = reajuste;
-	}
+    public void setReajuste(BigDecimal reajuste) {
+        this.reajuste = reajuste;
+    }
 
-	public BigDecimal getCapitalInicial() {
-		return capitalInicial;
-	}
+    public BigDecimal getCapitalInicial() {
+        return capitalInicial;
+    }
 
-	public void setCapitalInicial(BigDecimal capitalInicial) {
-		this.capitalInicial = capitalInicial;
-	}
+    public void setCapitalInicial(BigDecimal capitalInicial) {
+        this.capitalInicial = capitalInicial;
+    }
 
-	public BigDecimal getTaxaDeJuros() {
-		return taxaDeJuros;
-	}
+    public BigDecimal getTaxaDeJuros() {
+        return taxaDeJuros;
+    }
 
-	public void setTaxaDeJuros(BigDecimal taxaDeJuros) {
-		this.taxaDeJuros = taxaDeJuros;
-	}
+    public void setTaxaDeJuros(BigDecimal taxaDeJuros) {
+        this.taxaDeJuros = taxaDeJuros;
+    }
 
-	public BigDecimal getValorDoJuros() {
-		return valorDoJuros;
-	}
+    public BigDecimal getValorDoJuros() {
+        return valorDoJuros;
+    }
 
-	public void setValorDoJuros(BigDecimal valorDoJuros) {
-		this.valorDoJuros = valorDoJuros;
-	}
+    public void setValorDoJuros(BigDecimal valorDoJuros) {
+        this.valorDoJuros = valorDoJuros;
+    }
 
-	public LocalDate getDataNovoCredito() {
-		return dataNovoCredito;
-	}
+    public LocalDate getDataNovoCredito() {
+        return dataNovoCredito;
+    }
 
-	public void setDataNovoCredito(LocalDate dataNovoCredito) {
-		this.dataNovoCredito = dataNovoCredito;
-	}
+    public void setDataNovoCredito(LocalDate dataNovoCredito) {
+        this.dataNovoCredito = dataNovoCredito;
+    }
 
-	public BigDecimal getNovoCredito() {
-		return novoCredito;
-	}
+    public BigDecimal getNovoCredito() {
+        return novoCredito;
+    }
 
-	public void setNovoCredito(BigDecimal novoCredito) {
-		this.novoCredito = novoCredito;
-	}
+    public void setNovoCredito(BigDecimal novoCredito) {
+        this.novoCredito = novoCredito;
+    }
 
-	public BigDecimal getSaldoDevedor() {
-		return saldoDevedor;
-	}
+    public BigDecimal getSaldoDevedor() {
+        return saldoDevedor;
+    }
 
-	public void setSaldoDevedor(BigDecimal saldoDevedor) {
-		this.saldoDevedor = saldoDevedor;
-	}
+    public void setSaldoDevedor(BigDecimal saldoDevedor) {
+        this.saldoDevedor = saldoDevedor;
+    }
 
-	public BigDecimal getValorPago() {
-		return valorPago;
-	}
+    public BigDecimal getValorPago() {
+        return valorPago;
+    }
 
-	public void setValorPago(BigDecimal valorPago) {
-		this.valorPago = valorPago;
-	}
+    public void setValorPago(BigDecimal valorPago) {
+        this.valorPago = valorPago;
+    }
 
-	public LocalDate getDataDePagamento() {
-		return dataDePagamento;
-	}
+    public LocalDate getDataDePagamento() {
+        return dataDePagamento;
+    }
 
-	public void setDataDePagamento(LocalDate dataDePagamento) {
-		this.dataDePagamento = dataDePagamento;
-	}
+    public void setDataDePagamento(LocalDate dataDePagamento) {
+        this.dataDePagamento = dataDePagamento;
+    }
 
-	public Solicitante getSolicitante() {
-		return solicitante;
-	}
+    public Solicitante getSolicitante() {
+        return solicitante;
+    }
 
-	public void setSolicitante(Solicitante solicitante) {
-		this.solicitante = solicitante;
-	}
-
+    public void setSolicitante(Solicitante solicitante) {
+        this.solicitante = solicitante;
+    }
+	
+	
 }

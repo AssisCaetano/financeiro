@@ -12,11 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.controle.financeiro.domain.model.ContasAPagar;
-import com.controle.financeiro.domain.model.NovoEmprestimo;
-import com.controle.financeiro.domain.model.Pagamento;
+
 import com.controle.financeiro.domain.repositore.ContasAPagarRepository;
-import com.controle.financeiro.domain.repositore.PagamentoRepository;
-import com.controle.financeiro.domain.service.strategy.impl.ControlePagamentoStrategy;
+
 import com.controle.financeiro.dto.ContasAPagarDto;
 
 @Service
@@ -60,9 +58,11 @@ public class ContasAPagarService {
 //            throw new RuntimeException("Dados não encontrado! ");
         }else{
             contasAPagarRepository.save(contas);
+            System.out.println("CONTA ATUALIZADA");
             return contasAPagarRepository.findById(id);
         }
 		return contaByID;
+		
     }
     public List<ContasAPagar> getContasAPagarAll(){
         List<ContasAPagar> listaAPagar = contasAPagarRepository.findAll();
@@ -72,7 +72,10 @@ public class ContasAPagarService {
             return listaAPagar;
         }
         return listaAPagar;
+      
     }
+    
+   
     
     //Buscar conta pelo id
     public Optional<ContasAPagar> getContasAPagarById(UUID id, ContasAPagarDto contasAPagar){
@@ -101,6 +104,7 @@ public class ContasAPagarService {
 //            throw new RuntimeException("Dados não encontrado! ");
         }else{
             contasAPagarRepository.deleteById(id);
+            System.out.println("CONTA EXCLUÍDA!");
             System.out.println("CONTA EXCLUÍDA!");
             return byId;
         }

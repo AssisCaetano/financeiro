@@ -14,6 +14,7 @@ import com.controle.financeiro.domain.model.Pagamento;
 import com.controle.financeiro.domain.repositore.ContasAPagarRepository;
 import com.controle.financeiro.domain.repositore.PagamentoRepository;
 import com.controle.financeiro.domain.service.strategy.impl.ControlePagamentoStrategy;
+import com.controle.financeiro.domain.service.strategy.impl.ControlePagamentoStrategy;
 import com.controle.financeiro.dto.PagamentoDto;
 
 @Service
@@ -63,6 +64,7 @@ public class PagamentoService{
         return pagamentos;
     }
 
+    
     public Optional<Pagamento> pagamentoId(UUID id){
         Optional<Pagamento> byIdPagamento = pagamentoRepository.findById(id);
         return byIdPagamento;

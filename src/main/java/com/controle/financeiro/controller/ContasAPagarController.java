@@ -7,7 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,6 +47,10 @@ public class ContasAPagarController {
     //Realiza a inserção dos dados no bd
     @PostMapping("/conta")
     public String saveConta(RedirectAttributes attr,@ModelAttribute("conta") ContasAPagar contasAPagar) {
+    	
+//    	if(result.hasErrors()) {
+//    		attr.addFlashAttribute("org.springframework.validation.BindingResult.cadastro", result);
+//    	}
     	contasAPagarService.saveConta(contasAPagar);
     	attr.addFlashAttribute("success", "Conta associado ao solicitante com sucesso.");
 		return "redirect:./conta";
@@ -111,16 +115,5 @@ public class ContasAPagarController {
 		model.addAttribute("lista", contasAPagarService.buscarContaPorSolicitante(nome));
 		return "cadastro-conta/lista";
 	}
-	
-	//MÉTODO PARA BUSCAR CONTAS ENTRE DATAS
-//	 @GetMapping("/buscar/datas")
-//	    public String buscarContasEntreDatas(@RequestParam("dataDoEmprestimo")LocalDate dataDoEmprestimo, @RequestParam("dataDeVencimento") LocalDate dataDeVencimento, Model model) {
-//
-//	        List<ContasAPagar> contas = contasAPagarService.buscarContaEntreDatas(dataDoEmprestimo, dataDeVencimento);
-//	        model.addAttribute("lista", contas);
-//	        model.addAttribute("lista", dataDoEmprestimo);
-//	        model.addAttribute("lista", dataDeVencimento);
-//	        
-//	        return "cadastro-conta/lista"; 
-//	    }
+
 }
