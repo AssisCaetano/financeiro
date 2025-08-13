@@ -1,0 +1,23 @@
+@charset "ISO-8859-1";
+ body {
+        background-color: #f8f9fa; /* Light background for a modern feel */
+    }
+    .card-custom {
+        border-radius: 0.75rem; /* Slightly rounded corners for the card */
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1); /* Soft shadow */
+        padding: 1.5rem;
+    }
+    .table-responsive {
+        margin-top: 1.5rem; /* Space below the title */
+    }
+    .action-icons a {
+        margin-right: 0.75rem; /* Space between icons */
+        transition: transform 0.2s ease-in-out;
+        display: inline-block; /* Ensure margin applies correctly */
+    }
+    .action-icons a:last-child {
+        margin-right: 0;
+    }
+    .action-icons a:hover {
+        transform: translateY(-2px); /* Slight lift on hover */
+    }
