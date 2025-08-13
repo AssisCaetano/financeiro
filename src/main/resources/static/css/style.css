@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300&display=swap');
+-- Estilização do menu lateral --- 
+
+*{
+	margin: 10%;
+	padding: 10%;
+/*	box-sizing: border-box;*/
+	font-family: 'Outfit', sans-serif;
+}
+
+body{
+	height: 50vh;
+}
+
+nav.menu-lateral{
+	width: 90px;
+	height: 100%;
+	background-color: black;
+	padding: 40px 0 40px 1%;
+	box-shadow: 5px 0 0 green;
+	position: fixed;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+}
+
+nav.menu-lateral:hover{
+	width: 300px;
+}
+
+.btn-expandir{
+	width:100%;
+	padding-left: 10px;
+}
+
+.btn-expandir > i{
+	color: white;
+	font-size: 24px;
+	cursor: pointer;
+	
+}
+
+ul{
+	height: 100%;
+	list-style-type: none;
+}
+
+ul li.item-menu{
+	transition: .1s;
+}
+
+ul li.item-menu:hover{
+	background:gray;
+	
+}
+ul li.item-menu a{
+	color: white;
+	text-decoration: none;
+	font-size: 20px;
+	padding: 10px 3%;
+	display: flex;
+	margin-bottom: 10px;
+	line-height: 40px
+}
+ul li.item-menu a .txt-link{
+	margin-left: 20px;
+	
+}
+ul li.item-menu a .icon > i{
+	font-size: 20px;
+	margin-right: 20px;
+
+}
+
+/*--Esrilização do formulário-- */
+
+.formulario {
+  background-color: #eaeaea;
+  MAX-WIDTH: 500PX;
+  MAX-HEIGHT: 500PX;
+  margin-top: 65px;
+  
+  margin-left: 70vh;
+  padding: 	15px 7%;
+  border-radius: 20px;
+  box-shadow: 0 0 20px;
+  box-shadow: 0 0 10px 0 black;
+
+  
+}
+
+.formulario input,
+.formulario text{
+
+	width: 200%;
+	height: 40px;
+	padding: 12px 15px;
+	border: 1px solid rgb(233, 233, 233);
+ 	border-radius: 6px;
+ 	box-sizing: border-box;
+
+}
+
+
+

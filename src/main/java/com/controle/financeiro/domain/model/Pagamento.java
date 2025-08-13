@@ -15,7 +15,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "pagamento")
+@Table(schema = "opening" ,name = "tb_pagamento")
 public class Pagamento{
     
     @Id
@@ -31,7 +31,7 @@ public class Pagamento{
     private LocalDate dataPagamento;
 
     @ManyToOne
-    @JoinColumn(name = "idContas", nullable = true)
+    @JoinColumn(name = "Contas", nullable = true)
     private ContasAPagar contasAPagar;
 
     public Pagamento() {

@@ -7,7 +7,8 @@ import java.util.UUID;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.controle.financeiro.domain.model.ContasAPagar;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.controle.financeiro.domain.model.Solicitante;
 import com.controle.financeiro.domain.repositore.SolicitanteRepository;
 import com.controle.financeiro.dto.SolicitanteDto;
@@ -18,18 +19,25 @@ public class SolicitanteService {
 
     @Autowired
     private SolicitanteRepository solicitanteRepository;
-
+	
+    //ESSE METODO É RESPONSAVEL POR SALVAR AS INFORMAÇÕES DO USUÁRIO NO BANCO
     public Solicitante salvarUsuario(SolicitanteDto solicitanteDto){
-        Solicitante solicitante = new Solicitante();
-        BeanUtils.copyProperties(solicitanteDto, solicitante);
-        Optional<Solicitante> usuario = solicitanteRepository.findByCpf(solicitante.getCpf());
-        if(usuario.isPresent()){
-            throw new RuntimeException("Os campos preenchido já existem!");
-        }else{
-            return solicitanteRepository.save(solicitante);
-        }
+    	
+    		Solicitante solicitante = new Solicitante();
+            BeanUtils.copyProperties(solicitanteDto, solicitante);
+            Solicitante validarCPF = solicitanteRepository.findByCpf(solicitante.getCpf());
+        	if(validarCPF != null) {
+        		throw new RuntimeException("CPF já cadastrado! ");      	
+        	}else {
+        		solicitanteRepository.save(solicitante);
+        	}
+
+		return solicitante;
     }
+    
+    //MÉTODO RESPONSAVÉL POR AUTALIZAR UM SOLICITANTE MAIS ANTES VERIFICA SE O ID NAO ESTÁ VAZIO
     public Optional<Solicitante> atualizaSolicitante(UUID id, SolicitanteDto solicitanteDto){
+    	
         Optional<Solicitante> atualizar = solicitanteRepository.findById(id);
         if(atualizar.isEmpty()){
             throw new RuntimeException("Preencha todos os campos! ");
@@ -40,39 +48,58 @@ public class SolicitanteService {
             return solicitanteRepository.findById(id);
         }
     }
+    
     public List<Solicitante> listarSolicitante(){
         List<Solicitante> users = solicitanteRepository.findAll();
         if(users.isEmpty()){
-            throw new RuntimeException("Nenhuma informação encontrada!");
+//            throw new RuntimeException("Nenhuma informação encontrada!");
         }else{
             return solicitanteRepository.findAll();
         }
+		return users;
     }
+    
     public Optional<Solicitante> buscaSolicitante(UUID id, SolicitanteDto solicitanteDto){
         Optional<Solicitante> localizar = solicitanteRepository.findById(id);
         if(localizar.isEmpty()){
-            throw new RuntimeException("Preencha todos os campos! ");
+//            throw new RuntimeException("Preencha todos os campos! ");
         }else{
             return solicitanteRepository.findById(id);
+            
         }
+        return localizar;
     }
+    
+ // MÉTODO ATUALIZADO: Para buscar o Solicitante com suas contas carregadas
+    @Transactional()
+    public Optional<Solicitante> buscaSolicitanteComContas(UUID id){ // Parâmetro renomeado para consistência
+        // Usando o novo nome do método e o parâmetro corrigido
+        Optional<Solicitante> solicitanteOptional = solicitanteRepository.getSolicitanteWithContasById(id);
+        if(solicitanteOptional.isEmpty()){
+            System.out.println("A BUSCA PELO ID DO SOLICITANTE NÃO TROUXE NENHUM RESULTADO OU CONTAS ASSOCIADAS!");
+        } else {
+            solicitanteOptional.ifPresent(solicitante -> solicitante.getContasAPagar().size());
+            System.out.println("SOLICITANTE E SUAS CONTAS LOCALIZADOS!");
+        }
+        return solicitanteOptional;
+    }
+    
+    
     public Optional<Solicitante> deletaSolicitante(UUID id){
         Optional<Solicitante> deletarSolicante = solicitanteRepository.findById(id);
         if(deletarSolicante.isPresent()){
             solicitanteRepository.deleteById(id);
             return deletarSolicante;
         }else{
-            throw new RuntimeException("Dados não encontrado! ");
+//            throw new RuntimeException("Dados não encontrado! ");
+        	System.out.println("SOLICITANTE PARA EXCLUSÃO NÃO FOI ENCONTRADO!");
         }
+        System.out.println("SOLICITANTE EXCLUÍDO!");
+        return deletaSolicitante(id);
     }
-    public Solicitante adicionaConta(UUID id, ContasAPagar contasAPagar){
-        Optional<Solicitante> usr = solicitanteRepository.findById(id);
-        if(usr.isPresent()){
-            Solicitante solicitante = usr.get();
-            solicitante.getContasAPagar().add(contasAPagar);
-            return solicitanteRepository.save(solicitante);
-        }else{
-            throw new RuntimeException("Conta não adicionada");
-        }
+    
+    public List<Solicitante> buscarPorNome(String nome){
+    	return solicitanteRepository.buscarPorNome(nome);
     }
+
 }

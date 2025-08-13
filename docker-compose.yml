@@ -1,28 +1,36 @@
-version: "3.8"
+version: '3.8'
+
 services:
+  # Serviço da sua aplicação
   app:
     build: .
+    volumes:
+      # Use o volume para mapear o .war diretamente do seu projeto para o container
+      # Isso facilita o desenvolvimento, pois você não precisa reconstruir a imagem toda hora.
+      # Remova ou comente essa linha se quiser que o Dockerfile copie o .war de forma definitiva
+      - ./target/financeiro-0.0.1-SNAPSHOT.war:/usr/local/tomcat/webapps/finopen.war
     ports:
       - "8080:8080"
     depends_on:
       - db
     environment:
-      - DB_HOST=db
-      - DB_USER=root
-      - DB_PASSWORD=secret
-      - DB_NAME=financeiro
+      # Variáveis de ambiente para a sua aplicação
+      - DATABASE_HOST=db
+      - DATABASE_NAME=creditoSeguro
+      - DATABASE_USER=admin
+      - DATABASE_PASSWORD=Dr0wssap
+
+  # Serviço do banco de dados PostgreSQL
   db:
-    image: mysql:8.0
-    container_name: mysql_container
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: financeiro
-    ports:
-      - "3306:3306"
-    cap_add:
-      - SYS_NICE
+    image: postgres:13
     volumes:
-      - mysql_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=creditoSeguro
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=Dr0wssap
+    ports:
+      - "5432:5432"
+
 volumes:
-    mysql_data:
+  postgres_data:
