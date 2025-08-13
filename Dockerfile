@@ -1,5 +1,5 @@
 # Usa uma imagem oficial do Tomcat 10 com JDK 17
-FROM tomcat:10.1.20-jdk17-temurin-jammy
+FROM tomcat:10.1.20-jdk17-temurin
 
 # Remove o aplicativo de exemplo que vem no Tomcat
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
@@ -12,7 +12,7 @@ RUN rm -rf /usr/local/tomcat/webapps/manager
 # O nome do arquivo será 'seu-projeto.war'
 # A aplicação estará acessível em http://localhost:8080/seu-projeto/
 # Ajuste o caminho 'target/seu-projeto.war' para o local onde seu .war é gerado.
-COPY target/financeiro-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/finopen.war
+COPY target/finopen.war /usr/local/tomcat/webapps/app.war
 
 # Expõe a porta padrão do Tomcat
 EXPOSE 8080

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--<link rel="stylesheet" href="/css/style.css">-->
+<!--<link rel="stylesheet" href="/css/modalCadastroSolicitante.css">-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+	integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<title>FINOPEN - Controle de Gastos</title>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg m-auto navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" th:href="@{/cadastrar/cadastro}">Home</a>
+          <button class="navbar-toggler" navbar navbar-dark bg-dark data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-6 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" th:href="@{/cadastrar/cadastro}">Novo Usuário</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" th:href="@{/contas/conta}">Solicitar Crédito</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="#">Pagamento</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="#">Empréstimo</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="#">ADD ao Carrinho</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Mais Opções
+                </a>
+				<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<li><a class="dropdown-item" th:href="@{/cadastrar/lista}">Listar de Usuários</a></li>
+					<li><a class="dropdown-item" th:href="@{/contas/lista}">Listar Contas</a></li>
+					<li><a class="dropdown-item" href="#">Listar de Pagamentos</a></li>
+					<li><a class="dropdown-item" href="#">Listar de Empréstimos</a></li>
+				</ul>
+            </ul>
+          </div>
+        </div>
+      </nav>
+ 	
+ 	<div class="container ">
+        <div class="col-3 w-50 m-auto py-4">
+           <h2>Carrinho</h2>
+            <div class="row ">
+                <form th:object="${adicionar}" method="post">
+                
+					<div class="form-group">
+						<input type="hidden" class="form-control " id="id" th:field="*{idSolicitante}">
+					</div>
+					<div class="form-group">
+						<label for="nome">Nome</label>
+						<input type="text" class="form-control " id="nome" th:field="*{nome}" readonly>
+					</div>
+					<div class="form-group">
+						<label for="sobrenome">Sobre Nome</label> <input type="text" class="form-control" id="sobrenome"
+							th:field="*{sobrenome}" readonly>
+					</div>
+					<div class="form-group">
+						<label for="endereco" class="form-label">Endereço</label> <input type="text" class="form-control" id="endereco"
+							placeholder="Digite seu endereço" th:field="*{endereco}" readonly>
+					</div>
+					<div class="form-group">
+						<label for="telefone" class="form-label">Telefone</label> <input type="text" class="form-control" id="telefone"
+							placeholder="(xx) xxxxx-xxxx" th:field="*{telefone}" readonly>
+					</div>
+					<div class="form-group">
+						<label for="cpf" class="form-label">CPF</label> <input type="text" class="form-control" id="cpf"
+							placeholder="000.000.000-00" th:field="*{cpf}" readonly>
+					</div>
+					<div class="form-group">
+						<label for="descricao" class="form-label">Descrição</label> <input type="text" class="form-control" id="descricao"
+							th:field="*{descricao}" readonly>
+					</div>
+					<div class="col-12 my-4">
+						<button type="button" class="btn btn-primary">				
+							<a th:href="@{/contas/lista}" class="btn-primary"><i class="fa-solid fa-magnifying-glass fa-lg"></i> Selecione uma Conta</a>							
+						</button>
+					</div>
+                </form>
+            </div>
+        </div>
+      </div>
+ 			
+			<div class="container">
+				<div class="form-group">
+					<input type="hidden" class="form-control " id="id">
+				</div>
+				<div class="form-group">
+					<label for="dataDoEmprestimo">Data Atual</label>
+					<input type="text" class="form-control " id="dataDoEmprestimo">
+				</div>
+				<div class="form-group">
+					<label for="dataDeVencimento" class="form-label">Data de Vencimento</label>
+					<input type="text" class="form-control" id="dataDeVencimento">
+				</div>
+				<div class="form-group">
+					<label for="capitalInicial">Capital Inicial R$</label>
+					<input type="text" class="form-control" id="capitalInicial">
+				</div>
+				<div class="form-group">
+					<label for="taxaDeJuros" class="form-label">Taxa de Juros %</label>
+					<input type="text" class="form-control" id="taxaDeJuros">
+				</div>
+			</div>
+
+</body>
+</html>
