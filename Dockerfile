@@ -1,20 +1,37 @@
-# Usa uma imagem oficial do Tomcat 10 com JDK 17
+# --- ESTÁGIO DE BUILD (FAZ A COMPILAÇÃO DO SEU PROJETO) ---
+# Usa uma imagem do Maven para compilar o projeto.
+# 'AS build-stage' dá um nome a este estágio para podermos referenciá-lo depois.
+FROM maven:3.8.7-eclipse-temurin-17 AS build-stage
+
+# Define o diretório de trabalho dentro do container.
+WORKDIR /app
+
+# Copia o arquivo pom.xml para que o Docker possa baixar as dependências.
+COPY pom.xml .
+
+# Baixa as dependências. Se o pom.xml não mudar, o Docker usa o cache.
+RUN mvn dependency:go-offline
+
+# Copia o código-fonte restante e compila a aplicação.
+COPY src ./src
+RUN mvn package
+
+# --- ESTÁGIO FINAL (CRIA A IMAGEM DE EXECUÇÃO) ---
+# Usa a imagem do Tomcat oficial, que será a base da nossa imagem final.
 FROM tomcat:10.1.20-jdk17-temurin
 
-# Remove o aplicativo de exemplo que vem no Tomcat
-RUN rm -rf /usr/local/tomcat/webapps/ROOT
-RUN rm -rf /usr/local/tomcat/webapps/docs
-RUN rm -rf /usr/local/tomcat/webapps/examples
-RUN rm -rf /usr/local/tomcat/webapps/host-manager
-RUN rm -rf /usr/local/tomcat/webapps/manager
+# Remove os aplicativos de exemplo do Tomcat, como você já estava fazendo.
+RUN rm -rf /usr/local/tomcat/webapps/ROOT \
+    /usr/local/tomcat/webapps/docs \
+    /usr/local/tomcat/webapps/examples \
+    /usr/local/tomcat/webapps/host-manager \
+    /usr/local/tomcat/webapps/manager
 
-# Copia seu arquivo .war para a pasta webapps do Tomcat
-# O nome do arquivo será 'seu-projeto.war'
-# A aplicação estará acessível em http://localhost:8080/seu-projeto/
-# Ajuste o caminho 'target/seu-projeto.war' para o local onde seu .war é gerado.
-COPY target/finopen.war /usr/local/tomcat/webapps/app.war
+# Copia o arquivo .war do ESTÁGIO DE BUILD para a pasta webapps do Tomcat.
+# A instrução '--from=build-stage' é o segredo aqui!
+COPY --from=build-stage /app/target/finopen.war /usr/local/tomcat/webapps/app.war
 
-# Expõe a porta padrão do Tomcat
+# Expõe a porta padrão do Tomcat.
 EXPOSE 8080
 
 
