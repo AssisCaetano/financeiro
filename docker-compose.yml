@@ -16,9 +16,10 @@ services:
     environment:
       # Variáveis de ambiente para a sua aplicação
       - DATABASE_HOST=db
+      - DATABASE_URL=jdbc:postgresql://localhost:5432/creditoSeguro
       - DATABASE_NAME=creditoSeguro
-      - DATABASE_USER=admin
-      - DATABASE_PASSWORD=Dr0wssap
+      - DATABASE_USER=${DATASOURCE_USERNAME}
+      - DATABASE_PASSWORD=${DATASOURCE_PASSWORD}
 
   # Serviço do banco de dados PostgreSQL
   db:
@@ -26,9 +27,10 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
+      
       - POSTGRES_DB=creditoSeguro
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=Dr0wssap
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
     ports:
       - "5432:5432"
 
