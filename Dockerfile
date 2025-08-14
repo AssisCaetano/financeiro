@@ -29,7 +29,7 @@ RUN rm -rf /usr/local/tomcat/webapps/ROOT \
 
 # Copia o arquivo .war do ESTÁGIO DE BUILD para a pasta webapps do Tomcat.
 # A instrução '--from=build-stage' é o segredo aqui!
-COPY --from=build-stage /app/target/finopen.war /usr/local/tomcat/webapps/app.war
+COPY --from=build-stage /app/target/financeiro-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/app.war
 
 # Expõe a porta padrão do Tomcat.
 EXPOSE 8080
