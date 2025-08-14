@@ -12,14 +12,14 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - db
+      - DATABASE_HOST
     environment:
       # Variáveis de ambiente para a sua aplicação
-      - DATABASE_HOST=db
-      - DATABASE_URL=jdbc:postgresql://db:5432/creditoSeguro
-      - DATABASE_NAME=creditoSeguro
-      - DATABASE_USER=${DATASOURCE_USERNAME}
-      - DATABASE_PASSWORD=${DATASOURCE_PASSWORD}
+      - DATABASE_HOST=DATABASE_HOST
+      - DATABASE_URL=jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORTA}/${DATABASE_NAME}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USER=${DATABASE_USERNAME}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
 
   # Serviço do banco de dados PostgreSQL
   db:
@@ -28,8 +28,8 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     environment:
       
-      - POSTGRES_DB=creditoSeguro
-      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_DB=DATABASE_NAME
+      - POSTGRES_USER=${DATABASE_USERNAME}
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
     ports:
       - "5432:5432"
