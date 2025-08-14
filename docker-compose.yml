@@ -16,7 +16,7 @@ services:
     environment:
       # Variáveis de ambiente para a sua aplicação
       - DATABASE_HOST=db
-      - DATABASE_URL=jdbc:postgresql://localhost:5432/creditoSeguro
+      - DATABASE_URL=jdbc:postgresql://db:5432/creditoSeguro
       - DATABASE_NAME=creditoSeguro
       - DATABASE_USER=${DATASOURCE_USERNAME}
       - DATABASE_PASSWORD=${DATASOURCE_PASSWORD}
