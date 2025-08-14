@@ -1,6 +1,6 @@
 # --- STAGE 1: O Ambiente de Build ---
 # Usa uma imagem com Maven e Java para compilar o projeto.
-FROM maven:3.8.7-openjdk-17 AS builder
+FROM maven:3.9.6-eclipse-temurin-17 AS builder
 
 # Define o diretório de trabalho dentro do container.
 WORKDIR /app
