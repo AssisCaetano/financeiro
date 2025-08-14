@@ -7,6 +7,10 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 import io.github.cdimascio.dotenv.Dotenv;
 
+
+
+
+
 @SpringBootApplication
 public class FinanceiroApplication extends SpringBootServletInitializer{
 
