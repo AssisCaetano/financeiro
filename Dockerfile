@@ -5,10 +5,6 @@
 FROM maven:3.8.7-eclipse-temurin-17 AS build-stage
 # Define o diretório de trabalho dentro do container.
 
-# Instala o Maven
-RUN apt-get update && \
-    apt-get install -y maven && \
-    rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 
 # Copia o arquivo pom.xml para que o Docker possa baixar as dependências.
