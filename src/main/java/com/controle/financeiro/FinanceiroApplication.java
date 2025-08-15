@@ -8,9 +8,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import io.github.cdimascio.dotenv.Dotenv;
 
 
-
-
-
 @SpringBootApplication
 public class FinanceiroApplication extends SpringBootServletInitializer{
 
@@ -20,6 +17,7 @@ public class FinanceiroApplication extends SpringBootServletInitializer{
         dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
 	}
 
+    @Override
 	 protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 	        return application.sources(FinanceiroApplication.class);
 	    }
