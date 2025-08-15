@@ -1,9 +1,14 @@
 # --- ESTÁGIO DE BUILD (FAZ A COMPILAÇÃO DO SEU PROJETO) ---
 # Usa uma imagem do Maven para compilar o projeto.
 # 'AS build-stage' dá um nome a este estágio para podermos referenciá-lo depois.
-FROM maven:3.8.7-eclipse-temurin-17 AS build-stage
 
+FROM maven:3.8.7-eclipse-temurin-17 AS build-stage
 # Define o diretório de trabalho dentro do container.
+
+# Instala o Maven
+RUN apt-get update && \
+    apt-get install -y maven && \
+    rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 
 # Copia o arquivo pom.xml para que o Docker possa baixar as dependências.
