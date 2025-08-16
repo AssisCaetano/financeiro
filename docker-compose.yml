@@ -15,11 +15,9 @@ services:
       - db
     environment:
       # Variáveis de ambiente para a sua aplicação
-      - DATABASE_HOST=db
-      - DATABASE_URL=${DATABASE_URL}
-      - DATABASE_NAME=ceditoSeguro
-      - DATABASE_USER=${DATABASE_USERNAME}
-      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${DATABASE_NAME}
+      - SPRING_DATASOURCE_USERNAME=${DATABASE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DATABASE_PASSWORD}
 
   # Serviço do banco de dados PostgreSQL
   db:
@@ -28,7 +26,7 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     environment:
       
-      - POSTGRES_DB=creditoSeguro
+      - POSTGRES_DB=${DATABASE_NAME}
       - POSTGRES_USER=${DATABASE_USERNAME}
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
     ports:

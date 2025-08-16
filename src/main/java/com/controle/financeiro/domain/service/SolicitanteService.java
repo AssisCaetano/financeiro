@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.controle.financeiro.domain.model.Solicitante;
 import com.controle.financeiro.domain.repositore.SolicitanteRepository;
-import com.controle.financeiro.dto.ContasAPagarDto;
 import com.controle.financeiro.dto.SolicitanteDto;
 
 

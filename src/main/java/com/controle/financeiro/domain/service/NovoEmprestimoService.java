@@ -1,6 +1,5 @@
 package com.controle.financeiro.domain.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -10,13 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.controle.financeiro.domain.model.ContasAPagar;
-//import com.controle.financeiro.domain.model.ContasAPagar;
 import com.controle.financeiro.domain.model.NovoEmprestimo;
 import com.controle.financeiro.domain.repositore.ContasAPagarRepository;
-//import com.controle.financeiro.domain.repositore.ContasAPagarRepository;
 import com.controle.financeiro.domain.repositore.NovoEmprestimoRepository;
 import com.controle.financeiro.domain.service.strategy.impl.ControleCreditoStrategy;
-//import com.controle.financeiro.domain.service.strategy.impl.ControleCreditoStrategy;
 import com.controle.financeiro.dto.NovoEmprestimoDto;
 
 @Service

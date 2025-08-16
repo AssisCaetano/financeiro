@@ -1,7 +1,6 @@
 package com.controle.financeiro.domain.service;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
 import com.controle.financeiro.domain.model.Usuario;
 import com.controle.financeiro.domain.repositore.UsuarioRepository;

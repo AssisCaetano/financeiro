@@ -1,6 +1,5 @@
 package com.controle.financeiro.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,11 +29,6 @@ public class SecurityConfig {
              // URLs Protegidas (somente usuários logados podem acessar)
                 .requestMatchers("/**").authenticated()
                 .requestMatchers("/cadastroLogin").authenticated()
-//                .requestMatchers("/cadastrar/cadastro/{id}**").authenticated()
-//                .requestMatchers("/contas/**").authenticated()
-//                .requestMatchers("/cadastrar_pagamento/**").authenticated()
-//                .requestMatchers("/novo_credito/**").authenticated()
-                
                 .anyRequest().authenticated()// Todas as outras requerem autenticação
             )
             .formLogin(form -> form
@@ -65,7 +59,7 @@ public class SecurityConfig {
 	@Bean
     public HttpSessionEventPublisher httpSessionEventPublisher() {
         return new HttpSessionEventPublisher();
-	}					
+	}
 	@Bean
 	public UserDetailsService userDetailsService(UsuarioRepository usuarioRepository) {
 	    CustomUserDetailsService customUserDetailsService = new CustomUserDetailsService();
