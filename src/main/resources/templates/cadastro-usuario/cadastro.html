@@ -43,7 +43,7 @@
                     <h3 class="fw-light my-3">Cadastro de Solicitante</h3>
                 </div>
                 <div class="card-body p-4">
-					<div th:replace="fragments/alert"></div>
+					<div th:replace="~{fragments/alert}"></div>
                     <form th:object="${cadastro}"  method="post">
                         <div class="form-floating mb-3">
                             <input type="hidden" class="form-control" id="idSolicitante" th:field="*{idSolicitante}" readonly>

@@ -58,7 +58,6 @@ public class SolicitanteController {
 			solicitarService.salvarUsuario(solicitante);
 			attr.addFlashAttribute("success", "Dados cadastrado com sucesso.");
 		} catch (Exception e) {
-			System.out.println("Erro ao cadastrar as informaçõe. " + e.getMessage());
 			attr.addFlashAttribute("fail", "O CPF informado para o cadastro já existe em nossa BASE.");
 		}
 		return "redirect:./cadastro";
@@ -87,7 +86,6 @@ public class SolicitanteController {
 				model.addAttribute("cadastro", cadastros);
 				attr.addFlashAttribute("success", "Solicitante atualizado com sucesso. ");
 			} catch (Exception e) {
-				System.out.println("Dados não atualizado " + e.getMessage());
 				attr.addFlashAttribute(
 						"fail", "Dados não atualizado pois o CPF informado já existe na Base de Dados com "
 								+ "outro solicitante. "
@@ -123,8 +121,7 @@ public class SolicitanteController {
 	            model.addAttribute("cadastro", solicitante);
 	            model.addAttribute("contas", solicitante.getContasAPagar());
 	        } else {
-	            // Tratar caso o solicitante não seja encontrado
-	            
+	            // Tratar caso o solicitante não seja encontrado	            
 	            model.addAttribute("cadastro", new Solicitante());
 	            model.addAttribute("contas", new java.util.ArrayList<ContasAPagar>());
 	        }

@@ -58,7 +58,7 @@
 						<div class="card-body">	
 							<div th:replace="fragments/alert"></div>	
 							<div class="card-body">
-						<div th:replace="fragments/alert"></div>
+						<div th:replace="~{fragments/alert}"></div>
                         <form class="formEmprestimo" th:object="${cadastro}" method="post">
                             <div class="mb-3">
 								<label for="dataPagamento" class="form-label">Data Pagamento</label>
