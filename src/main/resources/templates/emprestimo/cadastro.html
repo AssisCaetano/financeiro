@@ -56,27 +56,10 @@
 						<div class="card-header bg-primary text-white text-center">
 							<h3 class="fw-light my-2">Crédito Adicional</h3>
 						</div>
-<!-- 						<form th:action="@{/novo_credito/cadastro/{id}(id=${id})}" th:object="${conta}" > -->
-<!-- 							<form th:object="${conta}" > -->
-<!-- 							<div class="mb-4 p-3 bg-light rounded border"> -->
-<!-- 								<h5 class="mb-3">Detalhes da Conta Original:</h5> -->
-<!-- 								<div class="row g-3"> -->
-<!-- 									<div class="col-md-6"> -->
-<!-- 										<label for="dataDeVencimento" class="form-label">Data -->
-<!-- 											de Vencimento</label> <input type="text" class="form-control" -->
-<!-- 											id="dataDeVencimento" th:field="${conta.dataDeVencimento}" -->
-<!-- 											readonly> -->
-<!-- 									</div> -->
-<!-- 									<div class="col-md-6"> -->
-<!-- 										<label for="saldoDevedor" class="form-label">Saldo -->
-<!-- 											Devedor</label> <input type="text" class="form-control" -->
-<!-- 											id="saldoDevedor" th:field="${conta.saldoDevedor}" readonly> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 						</form> -->
+
 						<hr class="my-4">
 						<div class="card-body">
+							<div th:replace="~{fragments/alert}"></div>
 							<form class="formEmprestimo" th:object="${cadastro}"
 								method="post">
 
